@@ -1,0 +1,38 @@
+doctype html
+html
+	head
+		title CBG Admin
+		link(rel='stylesheet', href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css")
+		link(rel='stylesheet', href='/stylesheets/style.css')
+		script(src='https://use.fontawesome.com/a3a71a0323.js')
+		script(src='/javascripts/jquery.js')
+		script(src='/javascripts/login.js')
+		script(src='/javascripts/bootstrap.js')
+		script(src='/javascripts/cookies.js')
+		script(src='/javascripts/application.js')
+	body
+	block content
+	.fluid-container
+		.row
+			.col-lg-12.col-md-12.register_heading
+				img(src="/images/logo.png" style="width:200px")
+				h4 Welcome to CBG Admin Portal
+		.row
+			.col-lg-8.col-md-8.register_form
+				h5 Sign Up
+				include ../errors
+				form(action='/user/signup', method='post', novalidate)
+					.form-group
+						label(for='name') Name
+						input.form-control.login_input(name='name', value=name, autofocus)
+					.form-group
+						label(for='email') Email
+						input.form-control.login_input(name='email', value=email, autofocus)
+					.form-group
+						label(for='password') Password
+						input.form-control.login_input(name='password', type='password',value=password)
+					.form-group
+						input.btn.btn-primary.btn-lg.login_button(type='submit', value='Register')
+		.row
+				.col-lg-12/col-md-12.footer
+					p IRS 501(C’)(3) Organization © CBG Foundation 2017-18 - All rights reserved
