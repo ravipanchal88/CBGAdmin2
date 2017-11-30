@@ -1,38 +1,41 @@
 var express = require('express');
+var paginate = require('express-paginate');
 var models  = require('../models/index');
 var Student = models.student;
 var router = express.Router();
 
 /* GET for unauthorized users  */
 
-
 //Get for Home Page 
 
-// router.get('/index', function(req, res, next) {
-//     console.log("on student HOME page");
-//     res.render('student/index',{ title :' express student page'});
-
-// });
-
 router.get('/index', function(req, res) {
-	Student.findAll().then(function(result) {
+	const page = req.query.page || 1;
+	const itemCount = 11;
+	const pageCount = Math.ceil(itemCount / req.query.limit);
+	console.log('this is page Count:'+ pageCount);
+
+	Student.findAll({
+		limit:10,
+		offset:((page)-1)*10
+		
+	}).then(function(result) {
 		res.render('student/index', {
-			students: result
+			students: result,
+			pageCount,
+			itemCount,
+			pages: paginate.getArrayPages(req)(5,pageCount,req.query.page)
 		});
 	});
 });
 
 
-//Get for Add Student
+//Get Request  for Add Student
 router.get('/addstudent', function(req, res, next) {
     console.log("on student page");
     res.render('student/addstudent',{ title :' express student page'});
-
 });
 
-
-
-//Add Student Data
+//Post Request for Add Student Data
 router.post('/addstudent', function(request, response) {
 	console.log("In Add Student POST Method");
 	console.log(Student);
@@ -55,22 +58,6 @@ router.post('/addstudent', function(request, response) {
 		income:request.body.income,
 		housetype:request.body.housetype,
 		total:request.body.total
-		// firstname: 'ravi',
-		// lastname: 'panchal',
-		// dob: '09/13/1980',
-		// parentname: 'sureshbhai',
-		// address: '777 Hartley dr.,',
-		// village: 'Ahmedabad',
-		
-		// interest: 'request.body.interest',
-		// aadharnbr: 'request.body.aadharnbr',
-		// activity: 'request.body.activity',
-		// financialposition: 'request.body.financialposition',
-		// studycommitment: 'request.body.studycommitment',
-		// comment: 'request.body.comment',
-		// income:'request.body.income',
-		// housetype:'request.body.housetype',
-		// total:'request.body.total'
 	}).then(function(student) {
 		console.log("Student Added");
 		response.redirect(post.url);
@@ -82,6 +69,5 @@ router.post('/addstudent', function(request, response) {
 		})
 	})	
 });
-
 
 module.exports = router;

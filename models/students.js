@@ -89,6 +89,34 @@ module.exports = function(sequelize, DataTypes) {
       type:      DataTypes.STRING,
       allowNull: true
     }
+  }, {
+    defaultScope: {
+      order: [['firstname', 'asc']]
+    },
+    getterMethods: {
+      url: function() {
+        return(`/student/index/${this.slug}`);
+      }
+    },
   })
   return(Student);
 };
+   //    imageUrl: function() {
+   //      return(`/images/posts/${this.imageFilename}`);
+   //    },
+   //    imageThumbnailUrl: function() {
+   //      return(`${this.imageUrl}-thumbnail`);
+   //    }
+   //  },
+   // getterMethods: {
+   //    url: function() {
+   //      return(`/student/index${this.slug}`);
+   //    }
+  //     imageUrl: function() {
+  //       return(`/images/posts/${this.imageFilename}`);
+  //     },
+  //     imageThumbnailUrl: function() {
+  //       return(`${this.imageUrl}-thumbnail`);
+  //     }
+  //   },
+  //return(Student);

@@ -9,15 +9,19 @@ var cookieParser = require('cookie-parser');
 var session      = require('express-session');
 var passport     = require('passport');
 var flash = require('connect-flash');
+var paginate = require('express-paginate');
 
+var app = express();
 
+//Keep this before all the routes that will use pagiante
+app.use(paginate.middleware(10,50));
 
 //Routers
 var index = require('./routes/index');
 var users = require('./routes/user');
 var student = require('./routes/student');
 
-var app = express();
+
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));

@@ -10,7 +10,7 @@ block content
 					li Student Management
 					li Students
 		.row
-			.col-lg-19.col-md-9.col-sm-12
+			.col-lg-9.col-md-9.col-sm-12
 				form.navbar-form.navbar-center(action='/student/search', method='get')
 					.form-group
 						input.form-control(name='query', placeholder='Search Students')
@@ -36,3 +36,6 @@ block content
 								td=student.gender
 								td
 									a.btn.btn-primary(value=View Info) View/Update
+		.row
+			.col-lg-9.col-md-9
+				include _paginate
