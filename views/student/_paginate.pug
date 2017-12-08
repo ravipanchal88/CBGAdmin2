@@ -1,16 +1,17 @@
 if paginate.hasPreviousPages || paginate.hasNextPages(pageCount)
-  .navigation.well-sm#pagination
-    ul.pager
-      if paginate.hasPreviousPages
-        li.previous
-          a(href=paginate.href(true)).prev
-            i.fa.fa-arrow-circle-left
-            |  Previous
-      if pages
-        each page in pages
-          a.btn.btn-default(href=page.url)= page.number
-      if paginate.hasNextPages(pageCount)
-        li.next
-          a(href=paginate.href()).next
-            | Next&nbsp;
-            i.fa.fa-arrow-circle-right
+  .fluid-container
+    .row
+        .col-lg-2.col-md-2
+          if paginate.hasPreviousPages
+            .previous
+              a.btn-lg(href=paginate.href(true)).prev Prev
+                i.fa.fa-arrow-circle-left
+        .col-lg-5.col-md-5
+          if pages
+            each page in pages
+              a.btn-lg.btn-primary(href=page.url)= page.number
+        .col-lg-2.col-md-2  
+          if paginate.hasNextPages(pageCount)
+            .next
+              a.btn-lg(href=paginate.href()).next Next
+                i.fa.fa-arrow-circle-right
