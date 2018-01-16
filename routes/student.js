@@ -70,4 +70,55 @@ router.post('/addstudent', function(request, response) {
 	})	
 });
 
+
+//Get Request  for Edit/Update Student
+router.get('/editstudent/:id', function(request, response, next) {
+    console.log("On students EDIT page");
+	Student.findById(request.params.id).then(function(student){
+		if (student)
+	 		{
+	 			response.render('student/editstudent', {student: student})
+	 			console.log(student);
+	 		}
+		else
+			response.redirect('/');
+	}).catch(function(err) {
+	 	response.redirect('/student/index');
+	 });
+});
+
+
+//Post Request for Edit/Update Student '/:id/edit'
+router.post('/editstudent/:id', function(request, response) {
+	Student.findById(request.params.id).then(function(student) {
+		student.update(  {
+			firstname: request.body.firstname,
+			lastname: request.body.lastname,
+			dob: request.body.dob,
+			parentname: request.body.parentname,
+			address: request.body.address,
+			village: request.body.village,
+			gender: request.body.gender,
+			interest: request.body.interest,
+			aadharnbr: request.body.aadharnbr,
+			activity: request.body.activity,
+			financialposition: request.body.financialposition,
+			studycommitment: 'commited',
+			comment: request.body.comment,
+			income:request.body.income,
+			housetype:request.body.housetype,
+			total:request.body.total
+		}
+	 ).then(function(student) {
+	 	console.log(student);
+	 	response.redirect('/student/index');
+		}).catch(function(error) {
+			console.log(student);
+			response.render('student/editstudent', {
+				 student:    student
+			});
+		});
+	});
+});
+
 module.exports = router;

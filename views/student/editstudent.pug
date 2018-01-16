@@ -1,0 +1,77 @@
+extends ../layout
+
+block content
+	.fluid-container
+		.row
+			.col-lg-9.col-md-10
+				ul.breadcrumb
+					li 
+						a(href='/') Home
+					li Student Management	
+					li Update Student Info
+		.row
+			.col-lg-9.col-md-10
+				.panel-group
+					include ../errors
+					form(action=`/student/editstudent/${student.id}`, method='post')
+						.panel.panel-default
+							.panel-heading General Information
+							.panel-body
+								.form-group
+									label.col-lg-2.form_lbl(for='firstname') First Name
+									input.col-lg-4.form_txt(name='firstname', autofocus ,value = student.firstname)
+								.form-group
+									label.col-lg-2.form_lbl(for='lastname') Last Name
+									input.col-lg-4.form_txt(name='lastname', autofocus ,value = student.lastname)
+								.form-group
+									label.col-lg-2.form_lbl(for='parentname') Parents Name
+									input.col-lg-4.form_txt(name='parentname', autofocus ,value = student.parentname)
+								.form-group
+									label.col-lg-2.form_lbl(for='dob') Date of Birth
+									input.col-lg-4.form_txt(name='dob', type='date', autofocus ,value = student.dob)
+								.form-group
+									label.col-lg-2.form_lbl(for='address') Address Line
+									input.col-lg-10.form_txt(name='address',  autofocus ,value = student.address)
+								.form-group
+									label.col-lg-2.form_lbl(for='village') Village
+									input.col-lg-4.form_txt(name='village', autofocus ,value = student.village)
+									p.col-lg-5.form_txt ,Gujurat, INDIA
+								.form-group
+									label.col-lg-2.form_lbl(for='gender') Gender
+									select#gender.col-lg-4.form_txt(type='select'  name='gender' required='true')
+										option(value='Male') Male
+										option(value='Female') Female
+						.panel.panel-default
+							.panel-heading Interest & Evaluation
+							.panel-body
+								.form-group
+									label.col-lg-2.form_lbl(for='income') Income(INR)
+									input.col-lg-4.form_txt(name='income', value=student.income, type='number' autofocus)
+								.form-group
+									label.col-lg-2.form_lbl(for='aadharnbr') Aadhar#
+									input.col-lg-4.form_txt(name='aadharnbr', value=student.aadharnbr, type='text' autofocus)
+								.form-group
+									label.col-lg-2.form_lbl(for='housetype') House Type
+									input.col-lg-4.form_txt(name='housetype', value=student.housetype, autofocus)
+								.form-group
+									label.col-lg-2.form_lbl(for='interest') Interests
+									input.col-lg-4.form_txt(name='interest', value=student.interest, autofocus)
+								.form-group
+									label.col-lg-3.form_lbl(for='financialposition') Financial Position 
+									input.col-lg-3.form_txt(name='financialposition',value=student.financialposition)
+								.form-group
+									label.col-lg-3.form_lbl(for='studycommitment') Study Commitment 
+									input.col-lg-3.form_txt(name='studycommitment',value=student.studycommitment)
+								.form-group
+									label.col-lg-3.form_lbl(for='activity') Activity 
+									input.col-lg-3.form_txt(name='activity',value=student.activity)
+								.form-group
+									label.col-lg-3.form_lbl(for='total') Total 
+									input.col-lg-3.form_txt(name='total',value=student.total)
+								.form-group
+									label.col-lg-3.form_lbl(for='comment') Comments
+									textarea.col-lg-3.form_txt(name='comment', row="4" ,column="2",value=student.comments)
+						.panel.panel-default
+							.panel-body.panel-action
+								input.btn.btn-lg.btn-default.btn-primary(type='submit',value='Update')
+								input.btn.btn-lg.btn-primary(type='submit',value='Cancel')

@@ -48,6 +48,12 @@ margin: 5px;
 	border-radius: 10px;
 }
 
+.panel-action {
+	display: flex;
+	justify-content: space-between;
+	align-content: center;
+}
+
 .footer {
 /*	background-color: #323232;
 	color: white;

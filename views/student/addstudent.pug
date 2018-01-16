@@ -42,7 +42,7 @@ block content
 										option(value='Male') Male
 										option(value='Female') Female
 						.panel.panel-default
-							.panel-heading General Information
+							.panel-heading Interest & Evaluation
 							.panel-body
 								.form-group
 									label.col-lg-2.form_lbl(for='income') Income(INR)
@@ -71,6 +71,7 @@ block content
 								.form-group
 									label.col-lg-3.form_lbl(for='comment') Comments
 									textarea.col-lg-3.form_txt(name='comment', row="4" ,column="2",value=comment)
-								.form-group
-									input.btn.btn-primary.btn-md(type='submit',value='Submit')
-									input.btn.btn-primary.btn-md(type='submit',value='Cancel')
+						.panel.panel-default
+							.panel-body.panel-action
+								input.btn.btn-lg.btn-default.btn-primary(type='submit',value='Submit')
+								input.btn.btn-lg.btn-primary(type='submit',value='Cancel')

@@ -35,7 +35,7 @@ block content
 								td=student.village
 								td=student.gender
 								td
-									a.btn.btn-primary(value=View Info) View/Update
+									a.btn.btn-primary.btn-xs(href=`/student/editstudent/${student.id}`) View/Update
 		.row
 			.col-lg-9.col-md-9
 				include _paginate
