@@ -39,8 +39,10 @@ block content
 								.form-group
 									label.col-lg-2.form_lbl(for='gender') Gender
 									select#gender.col-lg-4.form_txt(type='select'  name='gender' required='true')
-										option(value='Male') Male
-										option(value='Female') Female
+										option(value='Male', selected=(student.gender=='Male') ? true : false)
+											| Male
+										option(value='Female',  selected=(student.gender=='Female') ? true : false)
+											| Female
 						.panel.panel-default
 							.panel-heading Interest & Evaluation
 							.panel-body
