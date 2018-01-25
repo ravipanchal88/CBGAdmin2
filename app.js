@@ -20,6 +20,7 @@ app.use(paginate.middleware(10,50));
 var index = require('./routes/index');
 var users = require('./routes/user');
 var student = require('./routes/student');
+var donor = require('./routes/donor');
 
 
 
@@ -51,6 +52,7 @@ app.use(function(request, response, next) {
 app.use('/', index);
 app.use('/user', users);
 app.use('/student',student);
+app.use('/donor',donor);
 
 
 // Middleware.

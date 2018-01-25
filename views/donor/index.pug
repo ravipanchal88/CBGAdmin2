@@ -1,0 +1,40 @@
+extends ../layout
+
+block content
+	.fluid-container
+		.row
+			.col-lg-9.col-md-9
+				ul.breadcrumb
+					li 
+						a(href='/') Home
+					li Donor Management
+					li Donors
+		.row
+			.col-lg-9.col-md-9.col-sm-12
+				form.navbar-form.navbar-center(action='/donor/search', method='get')
+					.form-group
+						input.form-control(name='query', placeholder='Search Donor')
+						input.btn.btn-default(type='submit', value='search')
+		.row
+			.col-lg-9.col-md-9
+				table.table-hover.table-cbg
+					thead
+						tr
+							th First Name
+							th Last  Name
+							th Email
+							th City
+							th Phone
+					tbody
+						each donor in donors
+							tr
+								td=donor.firstname
+								td=donor.lastname
+								td=donor.email
+								td=donor.city
+								td=donor.phone
+								td
+									a.btn.btn-primary.btn-xs(href=`/donor/editdonor/${donor.id}`) View/Update
+		.row
+			.col-lg-9.col-md-9
+				include _paginate

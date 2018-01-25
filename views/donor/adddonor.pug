@@ -1,0 +1,53 @@
+extends ../layout
+
+block content
+	.fluid-container
+		.row
+			.col-lg-9.col-md-10
+				ul.breadcrumb
+					li 
+						a(href='/') Home
+					li Donor Management
+					li Add Donor
+		.row
+			.col-lg-9.col-md-10
+				.panel-group
+					include ../errors
+					form(action='/donor/adddonor', method='post')
+						.panel.panel-default
+							.panel-heading General Information
+							.panel-body
+								.form-group
+									label.col-lg-2.form_lbl(for='firstname') First Name
+									input.col-lg-4.form_txt(name='firstname', autofocus)
+								.form-group
+									label.col-lg-2.form_lbl(for='lastname') Last Name
+									input.col-lg-4.form_txt(name='lastname', autofocus)
+								.form-group
+									label.col-lg-2.form_lbl(for='address1') Address Line2
+									input.col-lg-10.form_txt(name='address1',  autofocus)
+								.form-group
+									label.col-lg-2.form_lbl(for='address2') Address Line2
+									input.col-lg-10.form_txt(name='address2',  autofocus)
+								.form-group
+									label.col-lg-2.form_lbl(for='city') City
+									input.col-lg-4.form_txt(name='city', autofocus)
+								.form-group
+									label.col-lg-2.form_lbl(for='state') State
+									input.col-lg-4.form_txt(name='state', autofocus)
+								.form-group
+									label.col-lg-2.form_lbl(for='zip') Zip Code
+									input.col-lg-4.form_txt(name='zip', autofocus)
+								.form-group
+									label.col-lg-2.form_lbl(for='email') Email Address
+									input.col-lg-4.form_txt(name='email', autofocus)
+								.form-group
+									label.col-lg-2.form_lbl(for='phone') Phone Number
+									input.col-lg-4.form_txt(name='phone', autofocus)
+								.form-group
+									label.col-lg-3.form_lbl(for='comment') Comments
+									textarea.col-lg-3.form_txt(name='comment', row="4" ,column="2",value=comment)
+						.panel.panel-default
+							.panel-body.panel-action
+								input.btn.btn-lg.btn-default.btn-primary(type='submit',value='Submit')
+								input.btn.btn-lg.btn-primary(type='submit',value='Cancel')
