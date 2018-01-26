@@ -121,4 +121,39 @@ router.post('/editstudent/:id', function(request, response) {
 	});
 });
 
+// Get Request for Search for Student
+router.get('/search', function(req, res) {
+	const page = req.query.page || 1;
+	const itemCount = 11;
+	const pageCount = Math.ceil(itemCount / req.query.limit);
+	console.log('this is page Count:'+ pageCount);
+	console.log("Search test");
+	var query     = req.query.query;
+	var condition = `%${query}%`;
+	console.log("Search test2");
+	Student.findAndCountAll({
+		limit:10,
+		offset:((page)-1)*10,
+		where: {
+			$or: {
+				firstname: {
+					$iLike: condition
+				},
+				lastname: {
+					$iLike: condition
+				}
+			}
+		}
+	}).then(function(result) {
+		res.render('student/searchstudent', {
+			query: query,
+			count: result.count,
+			students: result.rows,
+			pageCount,
+			itemCount,
+			pages: paginate.getArrayPages(req)(5,pageCount,req.query.page)
+		});
+	});
+});
+
 module.exports = router;

@@ -1,0 +1,41 @@
+extends ../layout
+
+block content
+	.fluid-container
+		.row
+			.col-lg-9.col-md-9
+				ul.breadcrumb
+					li 
+						a(href='/') Home
+					li Student Management
+					li Student
+		.row
+			.col-lg-9.col-md-9.col-sm-12
+				form.navbar-form.navbar-center(action='/student/search', method='get')
+					.form-group
+						input.form-control(name='query', placeholder='Search Student')
+						input.btn.btn-default(type='submit', value='search')
+		.row
+			.col-lg-9.col-md-9
+				table.table-hover.table-cbg
+					thead
+						tr
+							th First Name
+							th Last  Name
+							th Parent Name
+							th Village
+							th Gender
+							th Action
+					tbody
+						each student in students
+							tr
+								td=student.firstname
+								td=student.lastname
+								td=student.parentname
+								td=student.village
+								td=student.gender
+								td
+									a.btn.btn-primary.btn-xs(href=`/student/editstudent/${student.id}`) View/Update
+		.row
+			.col-lg-9.col-md-9
+				include _paginate
