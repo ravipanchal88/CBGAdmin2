@@ -1,8 +1,11 @@
-var express = require('express');
+var express  = require('express');
 var paginate = require('express-paginate');
-var models  = require('../models/index');
-var Student = models.student;
-var router = express.Router();
+var multer   = require('multer');
+var sharp    = require('sharp');
+var models   = require('../models/index');
+var Student  = models.student;
+var router   = express.Router();
+var uploadHandler = multer({dest: 'public/images/studentimages'});
 
 /* GET for unauthorized users  */
 
@@ -12,12 +15,10 @@ router.get('/index', function(req, res) {
 	const page = req.query.page || 1;
 	const itemCount = 11;
 	const pageCount = Math.ceil(itemCount / req.query.limit);
-	console.log('this is page Count:'+ pageCount);
-
+	console.log("pageCount:"+ pageCount);
 	Student.findAll({
-		limit:10,
-		offset:((page)-1)*10
-		
+		limit:15,
+		offset:((page)-1)*15
 	}).then(function(result) {
 		res.render('student/index', {
 			students: result,
@@ -29,6 +30,7 @@ router.get('/index', function(req, res) {
 });
 
 
+
 //Get Request  for Add Student
 router.get('/addstudent', function(req, res, next) {
     console.log("on student page");
@@ -36,11 +38,13 @@ router.get('/addstudent', function(req, res, next) {
 });
 
 //Post Request for Add Student Data
-router.post('/addstudent', function(request, response) {
+router.post('/addstudent',uploadHandler.single('image'), function(request, response) {
 	console.log("In Add Student POST Method");
-	console.log(Student);
-	console.log(request.body.firstname);
-	console.log(request.body.gender);
+	 console.log(Student);
+	 console.log(request.body.firstname);
+	// console.log(request.body.gender);
+	console.log(request.file);
+	console.log(request.file.filename);
 	Student.create({
 		firstname: request.body.firstname,
 		lastname: request.body.lastname,
@@ -57,10 +61,17 @@ router.post('/addstudent', function(request, response) {
 		comment: request.body.comment,
 		income:request.body.income,
 		housetype:request.body.housetype,
-		total:request.body.total
+		total:request.body.total,
+		imageFilename: (request.file && request.file.filename)
 	}).then(function(student) {
 		console.log("Student Added");
-		response.redirect(post.url);
+		sharp(request.file.path)
+		.resize(250,250)
+		.withoutEnlargement()
+		.toFile(`${request.file.path}-thumbnail`, function() {
+			response.redirect('/student/index');
+		})
+		//response.redirect(post.url);
 	}).catch(function(error) {
 		console.log('NOTE: Student was not added');
 		response.render('student/addstudent', {
@@ -70,6 +81,29 @@ router.post('/addstudent', function(request, response) {
 	})	
 });
 
+
+// // Create.
+// router.post('/', uploadHandler.single('image'), function(request, response) {
+// 	Imagepost.create({
+// 		title:         request.body.title,
+// 		body:          request.body.body,
+		
+// 		imageFilename: (request.file && request.file.filename)
+// 	}).then(function(imagepost) {
+// 		console.log("inPICloop");
+// 		sharp(request.file.path)
+// 		.resize(490,490)
+// 		.withoutEnlargement()
+// 		.toFile(`${request.file.path}-thumbnail`, function() {
+// 			response.redirect('/imagepost');
+// 		});
+// 	}).catch(function(error) {
+// 		response.render('imagepost/new', {
+// 			imagepost:   request.body,
+// 			errors: error.errors
+// 		});
+// 	});
+// });
 
 //Get Request  for Edit/Update Student
 router.get('/editstudent/:id', function(request, response, next) {

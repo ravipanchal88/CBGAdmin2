@@ -10,32 +10,19 @@ block content
 					li Student Management
 					li Students
 		.row
-			.col-lg-9.col-md-9.col-sm-12
+			.col-lg-9.col-md-9.col-sm-12.searchbox
 				form.navbar-form.navbar-center(action='/student/search', method='get')
 					.form-group
 						input.form-control(name='query', placeholder='Search Students')
 						input.btn.btn-default(type='submit', value='search')
 		.row
-			.col-lg-9.col-md-9
-				table.table-hover.table-cbg
-					thead
-						tr
-							th First Name
-							th Last  Name
-							th Parent Name
-							th Village
-							th Gender
-							th Action
-					tbody
-						each student in students
-							tr
-								td=student.firstname
-								td=student.lastname
-								td=student.parentname
-								td=student.village
-								td=student.gender
-								td
-									a.btn.btn-primary.btn-xs(href=`/student/editstudent/${student.id}`) View/Update
+			.col-lg-9.col-md-9.col-sm-12.contentbox
+				each student in students
+					.col-lg-9.col-md-9.contentinnerbox
+						p: img.imgbox(src=student.imageThumbnailUrl)
+						h5= student.firstname+' '+student.lastname
+						h4= student.gender
+						a.btn.btn-primary.btn-xs(href=`/student/editstudent/${student.id}`) View/Update
 		.row
 			.col-lg-9.col-md-9
 				include _paginate

@@ -115,6 +115,47 @@ color: indianred;
 }
 
 /***********CBG Specific*************/
+.contentbox {
+	min-height:350px;
+/*	border:solid 2px red;*/
+}
+
+.searchbox {
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	justify-content: center;
+/*	border:solid 2px red;*/
+}
+
+.contentinnerbox {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	width: 230px;
+	border:0.5px solid lightgrey;
+	margin: 5px;
+
+}
+.pagenbr {
+	margin-right: 3px;
+}
+.imgbox {
+  width: 200px;
+  height: 200px; 
+  margin:10px 10px;
+ }
+
+.paginatebox {
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	justify-content: center;
+	margin-top: 5px;
+/*	border:1px red solid;*/
+	border-top: 1px solid lightgrey;
+}
 
 .register_heading {
 	display: flex;

@@ -13,7 +13,7 @@ block content
 			.col-lg-9.col-md-10
 				.panel-group
 					include ../errors
-					form(action='/student/addstudent', method='post')
+					form(action='/student/addstudent', method='post', enctype='multipart/form-data')
 						.panel.panel-default
 							.panel-heading General Information
 							.panel-body
@@ -71,6 +71,9 @@ block content
 								.form-group
 									label.col-lg-3.form_lbl(for='comment') Comments
 									textarea.col-lg-3.form_txt(name='comment', row="4" ,column="2",value=comment)
+								.form-group
+									label.col-lg-9.form_lbl(for='image') Student Image:
+									input.col-lg-3.form_txt.form-control(name='image', type='file')
 						.panel.panel-default
 							.panel-body.panel-action
 								input.btn.btn-lg.btn-default.btn-primary(type='submit',value='Submit')

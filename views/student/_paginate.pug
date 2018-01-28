@@ -1,17 +1,24 @@
 if paginate.hasPreviousPages || paginate.hasNextPages(pageCount)
   .fluid-container
     .row
-        .col-lg-2.col-md-2
+      .paginatebox
+        .col-lg-3.col-md-3
           if paginate.hasPreviousPages
             .previous
-              a.btn-lg(href=paginate.href(true)).prev Prev
+              a.btn-lg.i.fa.fa-arrow-circle-left(href=paginate.href(true)).prev Prev
+          else
+            .previous
+              a.btn-lg()
                 i.fa.fa-arrow-circle-left
-        .col-lg-5.col-md-5
+        .col-lg-3.col-md-3
           if pages
             each page in pages
-              a.btn-lg.btn-primary(href=page.url)= page.number
-        .col-lg-2.col-md-2  
+              a.btn-lg.btn-primary.pagenbr(href=page.url)= page.number
+        .col-lg-3.col-md-3  
           if paginate.hasNextPages(pageCount)
             .next
-              a.btn-lg(href=paginate.href()).next Next
-                i.fa.fa-arrow-circle-right
+              a.btn-lg.i.fa.fa-arrow-circle-right(href=paginate.href()).next Next
+          else
+            .previous
+              a.btn-lg()
+                i.fa.fa-arrow-circle-right      

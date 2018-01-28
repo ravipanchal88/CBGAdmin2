@@ -13,6 +13,13 @@ var paginate = require('express-paginate');
 
 var app = express();
 
+// Helpers.
+var dateFormat = require('dateformat');
+
+app.locals.date = function(date) {
+  return(dateFormat(date, 'mm dd yyyy'));
+};
+
 //Keep this before all the routes that will use pagiante
 app.use(paginate.middleware(10,50));
 
@@ -47,6 +54,7 @@ app.use(function(request, response, next) {
   //console.log(request.user);
   next();
 });
+
 
 
 app.use('/', index);

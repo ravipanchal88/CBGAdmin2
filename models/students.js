@@ -88,35 +88,35 @@ module.exports = function(sequelize, DataTypes) {
     comments: {
       type:      DataTypes.STRING,
       allowNull: true
+    },
+    imageFilename: {
+      type:         DataTypes.STRING,
+      allowNull:    false,
+      defaultValue: ''
+      // validate: {
+      //   notEmpty: {
+      //     msg: 'Image is required'
+      //   }
+      // }
     }
+
   }, {
     defaultScope: {
       order: [['firstname', 'asc']]
     },
+
     getterMethods: {
       url: function() {
         return(`/student/index/${this.slug}`);
+      },
+      imageUrl: function() {
+        return(`/images/studentimages/${this.imageFilename}`);
+      },
+      imageThumbnailUrl: function() {
+        return(`${this.imageUrl}-thumbnail`);
       }
     },
   })
   return(Student);
 };
-   //    imageUrl: function() {
-   //      return(`/images/posts/${this.imageFilename}`);
-   //    },
-   //    imageThumbnailUrl: function() {
-   //      return(`${this.imageUrl}-thumbnail`);
-   //    }
-   //  },
-   // getterMethods: {
-   //    url: function() {
-   //      return(`/student/index${this.slug}`);
-   //    }
-  //     imageUrl: function() {
-  //       return(`/images/posts/${this.imageFilename}`);
-  //     },
-  //     imageThumbnailUrl: function() {
-  //       return(`${this.imageUrl}-thumbnail`);
-  //     }
-  //   },
-  //return(Student);
+
