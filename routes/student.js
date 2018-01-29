@@ -4,10 +4,13 @@ var multer   = require('multer');
 var sharp    = require('sharp');
 var models   = require('../models/index');
 var Student  = models.student;
+var Donor    = models.donor;
 var router   = express.Router();
 var uploadHandler = multer({dest: 'public/images/studentimages'});
 
 /* GET for unauthorized users  */
+
+
 
 //Get for Home Page 
 
@@ -28,8 +31,6 @@ router.get('/index', function(req, res) {
 		});
 	});
 });
-
-
 
 //Get Request  for Add Student
 router.get('/addstudent', function(req, res, next) {
@@ -82,29 +83,6 @@ router.post('/addstudent',uploadHandler.single('image'), function(request, respo
 });
 
 
-// // Create.
-// router.post('/', uploadHandler.single('image'), function(request, response) {
-// 	Imagepost.create({
-// 		title:         request.body.title,
-// 		body:          request.body.body,
-		
-// 		imageFilename: (request.file && request.file.filename)
-// 	}).then(function(imagepost) {
-// 		console.log("inPICloop");
-// 		sharp(request.file.path)
-// 		.resize(490,490)
-// 		.withoutEnlargement()
-// 		.toFile(`${request.file.path}-thumbnail`, function() {
-// 			response.redirect('/imagepost');
-// 		});
-// 	}).catch(function(error) {
-// 		response.render('imagepost/new', {
-// 			imagepost:   request.body,
-// 			errors: error.errors
-// 		});
-// 	});
-// });
-
 //Get Request  for Edit/Update Student
 router.get('/editstudent/:id', function(request, response, next) {
     console.log("On students EDIT page");
@@ -121,6 +99,27 @@ router.get('/editstudent/:id', function(request, response, next) {
 	 });
 });
 
+
+//Get Request  for sponsor Student
+router.get('/sponsorstudent/:id', function(request, response, next) {
+    console.log("On  sponsor student method");
+	Student.findById(request.params.id).then(function(student){
+		if (student)
+	 		{
+	 			Donor.findAll().then(function(donor){
+	 				//console.log(donor);
+	 				response.render('student/sponsorstudent', {
+	 					student: student,
+	 					donors: donor
+	 				})
+	 			})
+	 		}
+		else
+			response.redirect('/');
+	}).catch(function(err) {
+	 	response.redirect('/student/index');
+	 });
+});
 
 //Post Request for Edit/Update Student '/:id/edit'
 router.post('/editstudent/:id', function(request, response) {
@@ -144,12 +143,12 @@ router.post('/editstudent/:id', function(request, response) {
 			total:request.body.total
 		}
 	 ).then(function(student) {
-	 	console.log(student);
+	 	//console.log(student);
 	 	response.redirect('/student/index');
 		}).catch(function(error) {
-			console.log(student);
+			//console.log(student);
 			response.render('student/editstudent', {
-				 student:    student
+				 student: student
 			});
 		});
 	});
@@ -160,8 +159,8 @@ router.get('/search', function(req, res) {
 	const page = req.query.page || 1;
 	const itemCount = 11;
 	const pageCount = Math.ceil(itemCount / req.query.limit);
-	console.log('this is page Count:'+ pageCount);
-	console.log("Search test");
+	// console.log('this is page Count:'+ pageCount);
+	// console.log("Search test");
 	var query     = req.query.query;
 	var condition = `%${query}%`;
 	console.log("Search test2");

@@ -104,7 +104,11 @@ module.exports = function(sequelize, DataTypes) {
     defaultScope: {
       order: [['firstname', 'asc']]
     },
-
+    classMethods: {
+      associate: function(models) {
+        models.student.belongsTo(models.donor);
+      }
+    },  
     getterMethods: {
       url: function() {
         return(`/student/index/${this.slug}`);

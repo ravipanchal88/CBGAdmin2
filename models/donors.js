@@ -70,6 +70,13 @@ module.exports = function(sequelize, DataTypes) {
     defaultScope: {
       order: [['firstname', 'asc']]
     },
+
+  classMethods: {
+      associate: function(models) {
+        models.donor.belongsTo(models.student);
+      }
+    }, 
+
     getterMethods: {
       url: function() {
         return(`/donor/index/${this.slug}`);
@@ -78,22 +85,4 @@ module.exports = function(sequelize, DataTypes) {
   })
   return(Donor);
 };
-   //    imageUrl: function() {
-   //      return(`/images/posts/${this.imageFilename}`);
-   //    },
-   //    imageThumbnailUrl: function() {
-   //      return(`${this.imageUrl}-thumbnail`);
-   //    }
-   //  },
-   // getterMethods: {
-   //    url: function() {
-   //      return(`/student/index${this.slug}`);
-   //    }
-  //     imageUrl: function() {
-  //       return(`/images/posts/${this.imageFilename}`);
-  //     },
-  //     imageThumbnailUrl: function() {
-  //       return(`${this.imageUrl}-thumbnail`);
-  //     }
-  //   },
-  //return(Student);
+

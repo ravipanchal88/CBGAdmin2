@@ -1,0 +1,76 @@
+extends ../layout
+
+block content
+	.fluid-container
+		.row
+			.col-lg-9.col-md-10
+				ul.breadcrumb
+					li 
+						a(href='/') Home
+					li Student Management	
+					li Sponsor Student
+		.row
+			.col-lg-9.col-md-10
+				.panel-group
+					include ../errors
+					form(action=`/student/sponsorstudent/${student.id}`, method='post')
+						.panel.panel-default
+							.panel-heading Student Information
+							.panel-body
+								.form-group
+									label.col-lg-2.form_lbl(for='firstname') First Name
+									input.col-lg-4.form_txt(name='firstname', autofocus ,value = student.firstname)
+								.form-group
+									label.col-lg-2.form_lbl(for='lastname') Last Name
+									input.col-lg-4.form_txt(name='lastname', autofocus ,value = student.lastname)
+								.form-group
+									label.col-lg-2.form_lbl(for='parentname') Parents Name
+									input.col-lg-4.form_txt(name='parentname', autofocus ,value = student.parentname)
+								.form-group
+									label.col-lg-2.form_lbl(for='dob') Date of Birth
+									input.col-lg-4.form_txt(name='dob', type='date', autofocus ,value = student.dob)
+								.form-group
+									label.col-lg-2.form_lbl(for='address') Address Line
+									input.col-lg-10.form_txt(name='address',  autofocus ,value = student.address)
+								.form-group
+									label.col-lg-2.form_lbl(for='village') Village
+									input.col-lg-4.form_txt(name='village', autofocus ,value = student.village)
+									p.col-lg-5.form_txt ,Gujurat, INDIA
+								.form-group
+									label.col-lg-2.form_lbl(for='gender') Gender
+									select#gender.col-lg-4.form_txt(type='select'  name='gender' required='true')
+										option(value='Male', selected=(student.gender=='Male') ? true : false)
+											| Male
+										option(value='Female',  selected=(student.gender=='Female') ? true : false)
+											| Female
+						.panel.panel-default
+							.panel-heading Sponsor Information
+							.panel-body
+								.form-group
+										label.col-lg-6.col-md-6.form_lbl(for='donor') sponsor
+										select#donor.col-lg-4.form_txt(type='select'  name='donor' required='true')
+											each donor in donors
+												option(value=donor.id ) 
+													= donor.firstname+' '+donor.lastname
+								.form-group
+									label.col-lg-6.col-md-6.form_lbl(for='spr_amt') Sponsorship Amount
+									select#spr_amt.col-lg-6.col-md-6.form_select(type='select'  name='spr_amt' required='true')
+										option(value='150', selected=(student.amount=='150.00') ? true : false)
+											| $150.00
+										option(value='250', selected=(student.amount=='250.00') ? true : false)
+											| $250.00
+										option(value='350', selected=(student.amount=='350.00') ? true : false)
+											| $350.00
+								.form-group
+									label.col-lg-6.col-md-6.form_lbl(for='spr_year') Sponsorship Year
+									select#spr_year.col-lg-6.col-md-6.form_select(type='select'  name='spr_year' required='true')
+										option(value='2018', selected=(student.amount=='2018') ? true : false)
+											| 2018
+										option(value='2019', selected=(student.amount=='2019') ? true : false)
+											| 2019
+										option(value='2020', selected=(student.amount=='350.00') ? true : false)
+											| 2020
+						.panel.panel-default
+							.panel-body.panel-action
+								input.btn.btn-lg.btn-default.btn-primary(type='submit',value='Sponsor')
+								input.btn.btn-lg.btn-primary(type='submit',value='Cancel')

@@ -258,16 +258,29 @@ background-color: #ffcf40;
 	/*border:solid 1px black;*/
 }
 
-.form_lbl,.form_txt {
-	margin: 0px 0px 5px 0px;
-	min-height: 30px;
+.form_lbl,.form_txt ,.form_select{
+	margin: 0px 0px 2px 0px;
+	height: 30px;
 	/*border:solid 1px grey;*/
 	/*border-radius: 5px;*/
 	color:grey;
 	font-size: small;
 	font-weight: bold;
-
+	/*border:solid 1px red;*/
 }
+
+
+.form_select {
+	margin: 0px 0px 5px 0px;
+	min-height: 50px;
+	/*border:solid 1px grey;*/
+	/*border-radius: 5px;*/
+	color:grey;
+	font-size: small;
+	font-weight: bold;
+	/*border:solid 1px red;*/
+}
+
 .form_action {
 	display: flex;
 	flex-direction: row;
@@ -473,6 +486,7 @@ height: 100%;
 
 .login_button {
 	width: 350px;
+	margin-top:25px;
 	background-color: #3299ff;
 }
 
