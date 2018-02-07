@@ -74,6 +74,7 @@ module.exports = function(sequelize, DataTypes) {
   classMethods: {
       associate: function(models) {
         models.donor.belongsTo(models.student);
+        models.student.belongsTo(models.sponsorship);
       }
     }, 
 

@@ -92,12 +92,12 @@ module.exports = function(sequelize, DataTypes) {
     imageFilename: {
       type:         DataTypes.STRING,
       allowNull:    false,
-      defaultValue: ''
-      // validate: {
-      //   notEmpty: {
-      //     msg: 'Image is required'
-      //   }
-      // }
+      defaultValue: '',
+      validate: {
+        notEmpty: {
+          msg: 'Image is required'
+        }
+      }
     }
 
   }, {
@@ -107,6 +107,7 @@ module.exports = function(sequelize, DataTypes) {
     classMethods: {
       associate: function(models) {
         models.student.belongsTo(models.donor);
+        models.student.belongsTo(models.sponsorship);
       }
     },  
     getterMethods: {
@@ -123,4 +124,5 @@ module.exports = function(sequelize, DataTypes) {
   })
   return(Student);
 };
+
 

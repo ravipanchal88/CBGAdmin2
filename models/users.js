@@ -1,3 +1,5 @@
+
+
 module.exports = function(sequelize, DataTypes) {
   var User = sequelize.define('user', {
     email: {
@@ -43,15 +45,14 @@ module.exports = function(sequelize, DataTypes) {
         }
       }
     } 
-  }
+  
   //   {
   //   classMethods: {
   //     associate: function(models) {
   //       models.user.hasMany(models.imagepost);
   //     }
   //   }
-  // }
-  )
+   })
 
   return(User);
 };

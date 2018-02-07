@@ -5,6 +5,7 @@ var sharp    = require('sharp');
 var models   = require('../models/index');
 var Student  = models.student;
 var Donor    = models.donor;
+var Sponsorship = models.sponsorship;
 var router   = express.Router();
 var uploadHandler = multer({dest: 'public/images/studentimages'});
 
@@ -151,6 +152,18 @@ router.post('/editstudent/:id', function(request, response) {
 				 student: student
 			});
 		});
+	});
+});
+
+//Post Request for Sponsoring Student '/:id/sponsor'  `/student/sponsorstudent/${student.id}
+router.post('/sponsorstudent/:id', function(request, response) {
+		Sponsorship.create ({
+		student_id: request.params.id,
+		donor_id :request.body.donor,
+		amount: request.body.spr_amt,
+		year: request.body.spr_year
+	}).then(function(sponsorship){
+		response.redirect('/student/index');
 	});
 });
 
