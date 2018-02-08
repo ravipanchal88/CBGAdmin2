@@ -98,8 +98,11 @@ module.exports = function(sequelize, DataTypes) {
           msg: 'Image is required'
         }
       }
+    },
+    IsSponsored: {
+      type: DataTypes.BOOLEAN,
+      defaultValue: false
     }
-
   }, {
     defaultScope: {
       order: [['firstname', 'asc']]

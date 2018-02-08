@@ -64,7 +64,8 @@ router.post('/addstudent',uploadHandler.single('image'), function(request, respo
 		income:request.body.income,
 		housetype:request.body.housetype,
 		total:request.body.total,
-		imageFilename: (request.file && request.file.filename)
+		imageFilename: (request.file && request.file.filename),
+		IsSponsored: false
 	}).then(function(student) {
 		console.log("Student Added");
 		sharp(request.file.path)
@@ -163,6 +164,11 @@ router.post('/sponsorstudent/:id', function(request, response) {
 		amount: request.body.spr_amt,
 		year: request.body.spr_year
 	}).then(function(sponsorship){
+		Student.findById(request.params.id).then(function(student) {
+		student.update(  {
+			IsSponsored: true
+		})
+	})
 		response.redirect('/student/index');
 	});
 });
