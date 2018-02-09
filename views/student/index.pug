@@ -23,7 +23,10 @@ block content
 						h5= student.firstname+' '+student.lastname
 						h4= student.gender
 						a.btn.btn-primary.btn-xs(href=`/student/editstudent/${student.id}`) View/Update
-						a.btn.btn-primary.btn-xs(href=`/student/sponsorstudent/${student.id}`) Sponsor
+						if (student.IsSponsored == true)
+							a.btn.btn-danger.btn-xs(disabled) Sponsored
+						else
+							a.btn.btn-primary.btn-xs(href=`/student/sponsorstudent/${student.id}`) Sponsor				
 		.row
 			.col-lg-9.col-md-9
 				include _paginate

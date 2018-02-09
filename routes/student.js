@@ -24,6 +24,7 @@ router.get('/index', function(req, res) {
 		limit:15,
 		offset:((page)-1)*15
 	}).then(function(result) {
+		// console.log(result);
 		res.render('student/index', {
 			students: result,
 			pageCount,

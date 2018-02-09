@@ -29,7 +29,7 @@ module.exports = function(sequelize, DataTypes) {
   },  
     {
     defaultScope: {
-        order: [['createdAt', 'ASC']]
+        //order: [['createdAt', 'ASC']]
         },
       classMethods: {
         associate: function(models) {
