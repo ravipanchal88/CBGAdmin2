@@ -17,8 +17,10 @@ var app = express();
 var dateFormat = require('dateformat');
 
 app.locals.date = function(date) {
-  return(dateFormat(date, 'mm dd yyyy'));
+  return(dateFormat(date, 'dd mm yyyy'));
 };
+
+
 
 //Keep this before all the routes that will use pagiante
 app.use(paginate.middleware(10,50));

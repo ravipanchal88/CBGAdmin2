@@ -44,7 +44,7 @@ module.exports = {
 
       },
        aadharnbr: {
-        type:      Sequelize.INTEGER
+        type:      Sequelize.STRING
 
       },
        housetype: {

@@ -102,7 +102,82 @@ module.exports = function(sequelize, DataTypes) {
     IsSponsored: {
       type: DataTypes.BOOLEAN,
       defaultValue: false
+    },
+    
+    cbg_id:{
+      type: DataTypes.STRING,
+      allowNull: false,
+      defaultValue: '',
+      validate: {
+          notEmpty: {
+            msg: 'CBG ID is required'
+          }
+      }
+    },
+
+    standard:{
+      type: DataTypes.STRING,
+      allowNull: false,
+      defaultValue: '',
+      validate: {
+          notEmpty: {
+            msg: 'standard is required'
+          }
+      }
+    },
+
+    division :{
+      type: DataTypes.STRING,
+      allowNull: false,
+      defaultValue: '',
+      validate: {
+          notEmpty: {
+            msg: 'division is required'
+          }
+      }
+    },
+
+    guardian_occupation :{
+      type: DataTypes.STRING,
+      allowNull: true
+    },
+     membersinfamily :{
+      type: DataTypes.INTEGER,
+      allowNull: true
+    },
+     district :{
+      type: DataTypes.STRING,
+      allowNull: true
+    },
+     taluka :{
+      type: DataTypes.STRING,
+      allowNull: true
+    },
+     pincode :{
+      type: DataTypes.INTEGER,
+      allowNull: true
+    },
+     mobile_nbr :{
+      type: DataTypes.STRING,
+      allowNull: true
+    },
+     ambition :{
+      type: DataTypes.STRING,
+      allowNull: true
+    },
+     referredby :{
+      type: DataTypes.STRING,
+      allowNull: true
+    },
+     examination_marks :{
+      type: DataTypes.INTEGER,
+      allowNull: true
+    },
+     priority :{
+      type: DataTypes.STRING,
+      allowNull: true
     }
+////
   }, {
     defaultScope: {
       order: [['firstname', 'asc']]

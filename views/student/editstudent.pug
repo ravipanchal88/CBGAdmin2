@@ -18,24 +18,28 @@ block content
 							.panel-heading General Information
 							.panel-body
 								.form-group
-									label.col-lg-2.form_lbl(for='firstname') First Name
-									input.col-lg-4.form_txt(name='firstname', autofocus ,value = student.firstname)
+									p: img.imgbox(src=student.imageThumbnailUrl)
+								.form-group
+									label.col-lg-2.form_lbl(for='cbg_id') CBG_ID
+									input.col-lg-2.form_txt(name='cbg_id', value=student.cbg_id, type='number' autofocus)
+								.form-group
+									label.col-lg-2.form_lbl(for='standard') Standard
+									input.col-lg-2.form_txt(name='standard', value=student.standard, type='number' autofocus)
+								.form-group
+									label.col-lg-2.form_lbl(for='division') Division
+									input.col-lg-2.form_txt(name='division', value=student.division, type='text' autofocus)
+								.form-group
+									label.col-lg-2.form_lbl(for='aadharnbr') Aadhar#
+									input.col-lg-10.form_txt(name='aadharnbr', value=student.aadharnbr, type='text' autofocus)
 								.form-group
 									label.col-lg-2.form_lbl(for='lastname') Last Name
-									input.col-lg-4.form_txt(name='lastname', autofocus ,value = student.lastname)
+									input.col-lg-4.form_txt(name='lastname', value=student.lastname,autofocus)
 								.form-group
-									label.col-lg-2.form_lbl(for='parentname') Parents Name
-									input.col-lg-4.form_txt(name='parentname', autofocus ,value = student.parentname)
+									label.col-lg-2.form_lbl(for='firstname') First Name
+									input.col-lg-4.form_txt(name='firstname', value=student.firstname ,autofocus)
 								.form-group
 									label.col-lg-2.form_lbl(for='dob') Date of Birth
-									input.col-lg-4.form_txt(name='dob', type='date', autofocus ,value = student.dob)
-								.form-group
-									label.col-lg-2.form_lbl(for='address') Address Line
-									input.col-lg-10.form_txt(name='address',  autofocus ,value = student.address)
-								.form-group
-									label.col-lg-2.form_lbl(for='village') Village
-									input.col-lg-4.form_txt(name='village', autofocus ,value = student.village)
-									p.col-lg-5.form_txt ,Gujurat, INDIA
+									input.col-lg-4.form_txt(name='dob', value=date(student.dob), autofocus)
 								.form-group
 									label.col-lg-2.form_lbl(for='gender') Gender
 									select#gender.col-lg-4.form_txt(type='select'  name='gender' required='true')
@@ -43,37 +47,70 @@ block content
 											| Male
 										option(value='Female',  selected=(student.gender=='Female') ? true : false)
 											| Female
-						.panel.panel-default
-							.panel-heading Interest & Evaluation
-							.panel-body
+								.form-group
+									label.col-lg-2.form_lbl(for='parentname') Parents Name
+									input.col-lg-10.form_txt(name='parentname', value=student.parentname , autofocus)
+								.form-group
+									label.col-lg-2.form_lbl(for='guardian_occupation') Occupation
+									input.col-lg-4.form_txt(name='guardian_occupation', type='text', value=student.guradian_occupation,autofocus)
 								.form-group
 									label.col-lg-2.form_lbl(for='income') Income(INR)
 									input.col-lg-4.form_txt(name='income', value=student.income, type='number' autofocus)
 								.form-group
-									label.col-lg-2.form_lbl(for='aadharnbr') Aadhar#
-									input.col-lg-4.form_txt(name='aadharnbr', value=student.aadharnbr, type='text' autofocus)
+									label.col-lg-2.form_lbl(for='membersinfamily') Members
+									input.col-lg-4.form_txt(name='membersinfamily', value=student.membersinfamily, type='number' autofocus)
 								.form-group
-									label.col-lg-2.form_lbl(for='housetype') House Type
+									label.col-lg-2.form_lbl(for='housetype') HouseType
 									input.col-lg-4.form_txt(name='housetype', value=student.housetype, autofocus)
+								.form-group
+									label.col-lg-2.form_lbl(for='address') AddressLine
+									input.col-lg-10.form_txt(name='address',value=student.address,  autofocus)
+								.form-group
+									label.col-lg-2.form_lbl(for='village') Village
+									input.col-lg-4.form_txt(name='village',value=student.village, autofocus)
+								.form-group
+									label.col-lg-2.form_lbl(for='taluka') Taluka
+									input.col-lg-4.form_txt(name='taluka',value=student.taluka, autofocus)
+								.form-group
+									label.col-lg-2.form_lbl(for='district') District
+									input.col-lg-4.form_txt(name='district', value=student.district ,autofocus)
+								.form-group
+									label.col-lg-2.form_lbl(for='pincode') Pincode
+									input.col-lg-4.form_txt(name='pincode', value=student.pincode ,autofocus)
+								.form-group
+									label.col-lg-2.form_lbl(for='mobile_nbr') Mobile Nbr
+									input.col-lg-4.form_txt(name='mobile_nbr', value =student.mobile_nbr , autofocus)
 								.form-group
 									label.col-lg-2.form_lbl(for='interest') Interests
 									input.col-lg-4.form_txt(name='interest', value=student.interest, autofocus)
 								.form-group
+									label.col-lg-2.form_lbl(for='ambition') Ambition
+									input.col-lg-4.form_txt(name='ambition', value=student.ambition, autofocus)
+						.panel.panel-default
+							.panel-heading Student Evaluation
+							.panel-body
+								.form-group
+									label.col-lg-3.form_lbl(for='referredby') Referred By: 
+									input.col-lg-9.form_txt(name='referredby',value=student.referredby)
+								.form-group
+									label.col-lg-3.form_lbl(for='examination_marks') Marks In Examination 
+									input.col-lg-1.form_txt(name='examination_marks',value=student.examination_marks)
+								.form-group
 									label.col-lg-3.form_lbl(for='financialposition') Financial Position 
-									input.col-lg-3.form_txt(name='financialposition',value=student.financialposition)
+									input.col-lg-1.form_txt(name='financialposition',value=student.financialposition)
 								.form-group
 									label.col-lg-3.form_lbl(for='studycommitment') Study Commitment 
-									input.col-lg-3.form_txt(name='studycommitment',value=student.studycommitment)
+									input.col-lg-1.form_txt(name='studycommitment',value=student.studycommitment)
 								.form-group
 									label.col-lg-3.form_lbl(for='activity') Activity 
-									input.col-lg-3.form_txt(name='activity',value=student.activity)
+									input.col-lg-1.form_txt(name='activity',value=student.activity)
 								.form-group
 									label.col-lg-3.form_lbl(for='total') Total 
 									input.col-lg-3.form_txt(name='total',value=student.total)
 								.form-group
 									label.col-lg-3.form_lbl(for='comment') Comments
-									textarea.col-lg-3.form_txt(name='comment', row="4" ,column="2",value=student.comments)
+									textarea.col-lg-9.form_txt(name='comment', row="4" ,column="7",value=student.comment)
 						.panel.panel-default
 							.panel-body.panel-action
-								input.btn.btn-lg.btn-default.btn-primary(type='submit',value='Update')
+								input.btn.btn-lg.btn-default.btn-primary(type='submit',value='Submit')
 								input.btn.btn-lg.btn-primary(type='submit',value='Cancel')

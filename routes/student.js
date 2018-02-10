@@ -22,7 +22,7 @@ router.get('/index', function(req, res) {
 	console.log("pageCount:"+ pageCount);
 	Student.findAll({
 		limit:15,
-		offset:((page)-1)*15
+		offset:(((page)-1)*15)
 	}).then(function(result) {
 		// console.log(result);
 		res.render('student/index', {
@@ -49,22 +49,34 @@ router.post('/addstudent',uploadHandler.single('image'), function(request, respo
 	console.log(request.file);
 	console.log(request.file.filename);
 	Student.create({
-		firstname: request.body.firstname,
+		cbg_id: request.body.cbg_id,
+		standard: request.body.standard,
+		division: request.body.division,
+		aadharnbr: '123456',
 		lastname: request.body.lastname,
+		firstname: request.body.firstname,
 		dob: request.body.dob,
+		gender: request.body.gender,
 		parentname: request.body.parentname,
+		guardian_occupation: request.body.guardian_occupation,
+		income:request.body.income,
+		membersinfamily: request.body.membersinfamily,
+		housetype:request.body.housetype,
 		address: request.body.address,
 		village: request.body.village,
-		gender: request.body.gender,
+		taluka: request.body.taluka,
+		district: request.body.district,
+		pincode: request.body.pincode,
+		mobile_nbr: request.body.mobile_nbr,
 		interest: request.body.interest,
-		aadharnbr: request.body.aadharnbr,
-		activity: request.body.activity,
+		ambition: request.body.ambition,
+		referredby: request.body.referredby,
+		examination_marks: request.body.examination_marks,
 		financialposition: request.body.financialposition,
 		studycommitment: 'commited',
-		comment: request.body.comment,
-		income:request.body.income,
-		housetype:request.body.housetype,
+		activity: request.body.activity,
 		total:request.body.total,
+		comment: request.body.comment,
 		imageFilename: (request.file && request.file.filename),
 		IsSponsored: false
 	}).then(function(student) {
@@ -128,25 +140,37 @@ router.get('/sponsorstudent/:id', function(request, response, next) {
 router.post('/editstudent/:id', function(request, response) {
 	Student.findById(request.params.id).then(function(student) {
 		student.update(  {
-			firstname: request.body.firstname,
+			cbg_id: request.body.cbg_id,
+			standard: request.body.standard,
+			division: request.body.division,
+			aadharnbr: '123456',
 			lastname: request.body.lastname,
+			firstname: request.body.firstname,
 			dob: request.body.dob,
+			gender: request.body.gender,
 			parentname: request.body.parentname,
+			guardian_occupation: request.body.guardian_occupation,
+			income:request.body.income,
+			membersinfamily: request.body.membersinfamily,
+			housetype:request.body.housetype,
 			address: request.body.address,
 			village: request.body.village,
-			gender: request.body.gender,
+			taluka: request.body.taluka,
+			district: request.body.district,
+			pincode: request.body.pincode,
+			mobile_nbr: request.body.mobile_nbr,
 			interest: request.body.interest,
-			aadharnbr: request.body.aadharnbr,
-			activity: request.body.activity,
+			ambition: request.body.ambition,
+			referredby: request.body.referredby,
+			examination_marks: request.body.examination_marks,
 			financialposition: request.body.financialposition,
 			studycommitment: 'commited',
-			comment: request.body.comment,
-			income:request.body.income,
-			housetype:request.body.housetype,
-			total:request.body.total
+			activity: request.body.activity,
+			total:request.body.total,
+			comment: request.body.comment
 		}
 	 ).then(function(student) {
-	 	//console.log(student);
+	 	console.log(student);
 	 	response.redirect('/student/index');
 		}).catch(function(error) {
 			//console.log(student);
