@@ -51,3 +51,14 @@ block content
 							.panel-body.panel-action
 								input.btn.btn-lg.btn-default.btn-primary(type='submit',value='Update')
 								input.btn.btn-lg.btn-primary(type='submit',value='Cancel')
+		.row
+			.col-lg-9.col-md-10
+				.panel-group
+					.panel.panel-default
+						.panel-heading Sponsored Students
+						.panel-body
+							each sponsored_student in sponsored_students
+								.col-lg-3.col-md-3.col-sm-12.contentbox
+									img.imgbox(src=sponsored_student.imageThumbnailUrl)
+									h5= sponsored_student.firstname+' '+sponsored_student.lastname
+									h4= sponsored_student.gender

@@ -185,7 +185,7 @@ module.exports = function(sequelize, DataTypes) {
     classMethods: {
       associate: function(models) {
         models.student.belongsTo(models.donor);
-        models.student.belongsTo(models.sponsorship);
+        models.student.hasMany(models.sponsorship);
       }
     },  
     getterMethods: {
@@ -197,6 +197,9 @@ module.exports = function(sequelize, DataTypes) {
       },
       imageThumbnailUrl: function() {
         return(`${this.imageUrl}-thumbnail`);
+      },
+      getStudentID : function() {
+          return(this.student_id);
       }
     },
   })

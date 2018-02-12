@@ -2,6 +2,9 @@ var express = require('express');
 var paginate = require('express-paginate');
 var models  = require('../models/index');
 var Donor = models.donor;
+var Sponsorship = models.sponsorship;
+var Student = models.student;
+
 var router = express.Router();
 
 /* GET for unauthorized users  */
@@ -32,7 +35,7 @@ router.get('/adddonor', function(req, res, next) {
     res.render('donor/adddonor',{ title :'CBG Admin'});
 });
 
-//Post Request for Add Donor Data
+//Post Request for Add Donor
 router.post('/adddonor', function(request, response) {
 	console.log("In add Donor POST Method");
 	console.log(Donor);
@@ -67,9 +70,32 @@ router.get('/editdonor/:id', function(request, response, next) {
     console.log("On Donor EDIT page");
 	Donor.findById(request.params.id).then(function(donor){
 		if (donor)
-	 		{
-	 			response.render('donor/editdonor', {donor: donor})
-	 			console.log(donor);
+	 		{	
+	 			Sponsorship.findAll({
+	 				attributes : ["student_id"] ,
+	 				where: {
+		 				donor_id: request.params.id
+		 		 	}	
+		 		}).then(function(result){
+		 			var students = [];
+		 			var columnData =[];
+		 			for(var i = 0; i < result.length; i++) 
+		 				{
+		 					columnData[i] = result[i].dataValues;
+		 					students[i] = columnData[i].student_id;
+		 				}	
+		 			Student.findAll({
+		 					 where: {
+		 					 	id : students
+		 					}
+		 			}).then(function(result1){
+		 				//console.log(result1);
+		 				response.render('donor/editdonor', {
+		 					donor: donor,
+		 					sponsored_students: result1
+		 				})
+		 			})
+		 		})			
 	 		}
 		else
 			response.redirect('/');

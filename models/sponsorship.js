@@ -33,14 +33,28 @@ module.exports = function(sequelize, DataTypes) {
         },
       classMethods: {
         associate: function(models) {
-          models.sponsorship.belongsTo(models.student);
+          models.sponsorship.hasMany(models.student);
           models.sponsorship.belongsTo(models.donor);
         }
       }, 
       getterMethods: {
         url: function() {
         return(`/student/sponsorstudent/${this.slug}`);
-        }
+        },
+        getStudentID : function() {
+          return(this.student_id);
+        },
+        findWithStudentId: function(student_id) {
+        return(this.findAll({
+          where: {
+                Id: student_id
+          },
+          include: [
+          // sequelize.models.user,
+            sequelize.models.student
+          ],
+        }));
+      } 
       }
     })
     return(Sponsorship);

@@ -73,7 +73,7 @@ router.post('/addstudent',uploadHandler.single('image'), function(request, respo
 		referredby: request.body.referredby,
 		examination_marks: request.body.examination_marks,
 		financialposition: request.body.financialposition,
-		studycommitment: 'commited',
+		studycommitment: request.body.studycommitment,
 		activity: request.body.activity,
 		total:request.body.total,
 		comment: request.body.comment,
@@ -164,12 +164,13 @@ router.post('/editstudent/:id', function(request, response) {
 			referredby: request.body.referredby,
 			examination_marks: request.body.examination_marks,
 			financialposition: request.body.financialposition,
-			studycommitment: 'commited',
+			studycommitment: request.body.studycommitment,
 			activity: request.body.activity,
 			total:request.body.total,
 			comment: request.body.comment
 		}
 	 ).then(function(student) {
+	 	console.log('i like black panties');
 	 	console.log(student);
 	 	response.redirect('/student/index');
 		}).catch(function(error) {
