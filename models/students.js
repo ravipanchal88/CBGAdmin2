@@ -193,7 +193,8 @@ module.exports = function(sequelize, DataTypes) {
         return(`/student/index/${this.slug}`);
       },
       imageUrl: function() {
-        return(`/images/studentimages/${this.imageFilename}`);
+        //return(`/images/studentimages/${this.imageFilename}`);
+        return(`https://cbgfoundation.s3.amazonaws.com/studentimages/${this.cbg_id}`);
       },
       imageThumbnailUrl: function() {
         return(`${this.imageUrl}-thumbnail`);

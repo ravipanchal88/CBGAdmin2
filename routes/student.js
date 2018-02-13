@@ -2,12 +2,16 @@ var express  = require('express');
 var paginate = require('express-paginate');
 var multer   = require('multer');
 var sharp    = require('sharp');
+var aws 	 = require('aws-sdk');
+var s3 		= new aws.S3({region:'us-east-2'});
+var uploadHandler = multer();
 var models   = require('../models/index');
 var Student  = models.student;
 var Donor    = models.donor;
 var Sponsorship = models.sponsorship;
 var router   = express.Router();
-var uploadHandler = multer({dest: 'public/images/studentimages'});
+//var uploadHandler = multer({dest: 'public/images/studentimages'});
+
 
 /* GET for unauthorized users  */
 
@@ -17,7 +21,8 @@ var uploadHandler = multer({dest: 'public/images/studentimages'});
 
 router.get('/index', function(req, res) {
 	const page = req.query.page || 1;
-	const itemCount = 11;
+	console.log(page);
+	const itemCount = 37;
 	const pageCount = Math.ceil(itemCount / req.query.limit);
 	console.log("pageCount:"+ pageCount);
 	Student.findAll({
@@ -29,7 +34,7 @@ router.get('/index', function(req, res) {
 			students: result,
 			pageCount,
 			itemCount,
-			pages: paginate.getArrayPages(req)(5,pageCount,req.query.page)
+			pages: paginate.getArrayPages(req)(10,pageCount,req.query.page)
 		});
 	});
 });
@@ -42,12 +47,7 @@ router.get('/addstudent', function(req, res, next) {
 
 //Post Request for Add Student Data
 router.post('/addstudent',uploadHandler.single('image'), function(request, response) {
-	console.log("In Add Student POST Method");
-	 console.log(Student);
-	 console.log(request.body.firstname);
-	// console.log(request.body.gender);
-	console.log(request.file);
-	console.log(request.file.filename);
+	//console.log("In Add Student POST Method");
 	Student.create({
 		cbg_id: request.body.cbg_id,
 		standard: request.body.standard,
@@ -77,19 +77,37 @@ router.post('/addstudent',uploadHandler.single('image'), function(request, respo
 		activity: request.body.activity,
 		total:request.body.total,
 		comment: request.body.comment,
-		imageFilename: (request.file && request.file.filename),
+		imageFilename: (request.file && request.file.originalname),
 		IsSponsored: false
 	}).then(function(student) {
-		console.log("Student Added");
-		sharp(request.file.path)
+		sharp(request.file.buffer)
 		.resize(250,250)
+		.max()
 		.withoutEnlargement()
-		.toFile(`${request.file.path}-thumbnail`, function() {
-			response.redirect('/student/index');
-		})
-		//response.redirect(post.url);
+		.toBuffer()
+		.then(function(thumbnail) {
+			s3.upload({
+				Bucket:     'cbgfoundation',
+				Key:        `studentimages/${student.cbg_id}`,
+				Body:        request.file.buffer,
+				ACL:        'public-read',
+				ContentType: request.file.mimetype
+			}, function(error, data) {
+				JSON.stringify(student);
+				console.log(JSON.stringify(student));
+				s3.upload({
+					Bucket:     'cbgfoundation',
+					Key:        `studentimages/${student.cbg_id}-thumbnail`,
+					Body:        thumbnail,
+					ACL:        'public-read',
+					ContentType: request.file.mimetype
+				}, function(error, data) {
+					response.redirect('/student/index');
+				});
+			});
+		});
 	}).catch(function(error) {
-		console.log('NOTE: Student was not added');
+		console.log('NOTE: "STUDENT WAS NOT ADDED "');
 		response.render('student/addstudent', {
 			student: request.body,
 			errors:  error.errors
@@ -170,7 +188,6 @@ router.post('/editstudent/:id', function(request, response) {
 			comment: request.body.comment
 		}
 	 ).then(function(student) {
-	 	console.log('i like black panties');
 	 	console.log(student);
 	 	response.redirect('/student/index');
 		}).catch(function(error) {

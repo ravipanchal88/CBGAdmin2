@@ -72,7 +72,7 @@ router.get('/editdonor/:id', function(request, response, next) {
 		if (donor)
 	 		{	
 	 			Sponsorship.findAll({
-	 				attributes : ["student_id"] ,
+	 				attributes : ["student_id","year"] ,
 	 				where: {
 		 				donor_id: request.params.id
 		 		 	}	
