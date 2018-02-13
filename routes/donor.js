@@ -12,9 +12,12 @@ var router = express.Router();
 //Get for Home Page 
 router.get('/index', function(req, res) {
 	const page = req.query.page || 1;
-	const itemCount = 11;
-	const pageCount = Math.ceil(itemCount / req.query.limit);
-	console.log('this is page Count:'+ pageCount);
+	var pageCount;
+	Donor.findAndCountAll().then(function(result1){
+		console.log(result1);
+		pageCount = Math.ceil(result1.count / req.query.limit);
+		console.log("pageCount:"+ pageCount);
+	}).then(function(result1){
 	Donor.findAll({
 		limit:10,
 		offset:((page)-1)*10
@@ -22,9 +25,9 @@ router.get('/index', function(req, res) {
 		res.render('donor/index', {
 			donors: result,
 			pageCount,
-			itemCount,
 			pages: paginate.getArrayPages(req)(5,pageCount,req.query.page)
 		});
+	});
 	});
 });
 
@@ -54,7 +57,7 @@ router.post('/adddonor', function(request, response) {
 		comment: request.body.comment
 	}).then(function(donor) {
 		console.log("donor was Added");
-		response.redirect(post.url);
+		response.redirect('/donor/index');
 	}).catch(function(error) {
 		console.log('NOTE: Donor was not added');
 		response.render('donor/adddonor', {
@@ -134,37 +137,43 @@ router.post('/editdonor/:id', function(request, response) {
 
 // Get Request for Search for Donor
 router.get('/search', function(req, res) {
+	//const page = req.query.page || 1;
+	//const itemCount = 11;
+	//const pageCount = Math.ceil(itemCount / req.query.limit);
+	//console.log('this is page Count:'+ pageCount);
 	const page = req.query.page || 1;
-	const itemCount = 11;
-	const pageCount = Math.ceil(itemCount / req.query.limit);
-	console.log('this is page Count:'+ pageCount);
-	console.log("Search test");
+	var pageCount;
+	//console.log("Search test");
 	var query     = req.query.query;
 	var condition = `%${query}%`;
-	console.log("Search test2");
-	Donor.findAndCountAll({
-		limit:10,
-		offset:((page)-1)*10,
-		where: {
-			$or: {
-				firstname: {
-					$iLike: condition
-				},
-				lastname: {
-					$iLike: condition
+	Donor.findAndCountAll().then(function(result1){
+		console.log(result1);
+		pageCount = Math.ceil(result1.count / req.query.limit);
+		console.log("pageCount:"+ pageCount);
+	}).then(function(result1){
+		Donor.findAndCountAll({
+			limit:10,
+			offset:((page)-1)*10,
+			where: {
+				$or: {
+					firstname: {
+						$iLike: condition
+					},
+					lastname: {
+						$iLike: condition
+					}
 				}
 			}
-		}
-	}).then(function(result) {
-		res.render('donor/searchdonor', {
-			query: query,
-			count: result.count,
-			donors: result.rows,
-			pageCount,
-			itemCount,
-			pages: paginate.getArrayPages(req)(5,pageCount,req.query.page)
+		}).then(function(result) {
+			res.render('donor/searchdonor', {
+				query: query,
+				count: result.count,
+				donors: result.rows,
+				pageCount,
+				pages: paginate.getArrayPages(req)(5,pageCount,req.query.page)
+			});
 		});
-	});
+	});	
 });
 
 module.exports = router;

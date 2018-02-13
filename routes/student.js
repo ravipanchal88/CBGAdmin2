@@ -21,22 +21,23 @@ var router   = express.Router();
 
 router.get('/index', function(req, res) {
 	const page = req.query.page || 1;
-	console.log(page);
-	const itemCount = 37;
-	const pageCount = Math.ceil(itemCount / req.query.limit);
-	console.log("pageCount:"+ pageCount);
-	Student.findAll({
+	var pageCount;
+	Student.findAndCountAll().then(function(result1){
+		console.log(result1);
+		pageCount = Math.ceil(result1.count / req.query.limit);
+		console.log("pageCount:"+ pageCount);
+	}).then(function(result){
+		Student.findAll({
 		limit:15,
 		offset:(((page)-1)*15)
-	}).then(function(result) {
-		// console.log(result);
-		res.render('student/index', {
-			students: result,
-			pageCount,
-			itemCount,
-			pages: paginate.getArrayPages(req)(10,pageCount,req.query.page)
+			}).then(function(result) {
+				res.render('student/index', {
+				students: result,
+				pageCount,
+				pages: paginate.getArrayPages(req)(10,pageCount,req.query.page)
+			});
 		});
-	});
+	})
 });
 
 //Get Request  for Add Student
