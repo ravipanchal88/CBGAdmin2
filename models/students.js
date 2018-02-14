@@ -107,6 +107,7 @@ module.exports = function(sequelize, DataTypes) {
     cbg_id:{
       type: DataTypes.STRING,
       allowNull: false,
+      unique: true,
       defaultValue: '',
       validate: {
           notEmpty: {
@@ -176,6 +177,10 @@ module.exports = function(sequelize, DataTypes) {
      priority :{
       type: DataTypes.STRING,
       allowNull: true
+    },
+      IsActive :{
+      type: DataTypes.BOOLEAN,
+      defaultValue : true
     }
 ////
   }, {

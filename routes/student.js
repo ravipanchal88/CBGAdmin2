@@ -79,7 +79,8 @@ router.post('/addstudent',uploadHandler.single('image'), function(request, respo
 		total:request.body.total,
 		comment: request.body.comment,
 		imageFilename: (request.file && request.file.originalname),
-		IsSponsored: false
+		IsSponsored: false,
+		IsActive: true
 	}).then(function(student) {
 		sharp(request.file.buffer)
 		.resize(250,250)
@@ -186,7 +187,8 @@ router.post('/editstudent/:id', function(request, response) {
 			studycommitment: request.body.studycommitment,
 			activity: request.body.activity,
 			total:request.body.total,
-			comment: request.body.comment
+			comment: request.body.comment,
+			IsActive: request.body.IsActive
 		}
 	 ).then(function(student) {
 	 	console.log(student);
