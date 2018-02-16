@@ -20,13 +20,13 @@ block content
 							.panel-body
 								.form-group
 									label.col-lg-2.form_lbl(for='firstname') First Name
-									input.col-lg-4.form_txt(name='firstname', autofocus ,value = donor.firstname)
+									input.col-lg-4.form_txt(name='firstname',value = donor.firstname autofocus)
 								.form-group
 									label.col-lg-2.form_lbl(for='lastname') Last Name
-									input.col-lg-4.form_txt(name='lastname', autofocus ,value = donor.lastname)
+									input.col-lg-4.form_txt(name='lastname', value = donor.lastname autofocus)
 								.form-group
-									label.col-lg-2.form_lbl(for='address1') Address Line2
-									input.col-lg-10.form_txt(name='address1',  autofocus ,value = donor.address1)
+									label.col-lg-2.form_lbl(for='address1') Address Line1
+									input.col-lg-10.form_txt(name='address1', value = donor.address1 autofocus)
 								.form-group
 									label.col-lg-2.form_lbl(for='address2') Address Line2
 									input.col-lg-10.form_txt(name='address2',  autofocus, value = donor.address2)
@@ -46,8 +46,8 @@ block content
 									label.col-lg-2.form_lbl(for='phone') Phone Number
 									input.col-lg-4.form_txt(name='phone', autofocus, value = donor.phone)
 								.form-group
-									label.col-lg-3.form_lbl(for='comment') Comments
-									textarea.col-lg-3.form_txt(name='comment', row="4" ,column="2",value=comment)
+									label.col-lg-3.form_lbl(for='comments') Comments
+									textarea.col-lg-3.form_txt(name='comments', row="4" ,column="2",value=donor.comments)
 						.panel.panel-default
 							.panel-body.panel-action
 								input.btn.btn-lg.btn-default.btn-primary(type='submit',value='Update')

@@ -35,7 +35,9 @@ router.get('/index', function(req, res) {
 //Get Request  for Add Donors
 router.get('/adddonor', function(req, res, next) {
     console.log("on donor page");
-    res.render('donor/adddonor',{ title :'CBG Admin'});
+    res.render('donor/adddonor', { 
+    	donor: {}
+	});
 });
 
 //Post Request for Add Donor
@@ -54,7 +56,7 @@ router.post('/adddonor', function(request, response) {
 		zip: request.body.zip,
 		email: request.body.email,
 		phone: request.body.phone,
-		comment: request.body.comment
+		comments: request.body.comments
 	}).then(function(donor) {
 		console.log("donor was Added");
 		response.redirect('/donor/index');
@@ -103,7 +105,11 @@ router.get('/editdonor/:id', function(request, response, next) {
 		else
 			response.redirect('/');
 	}).catch(function(err) {
-	 	response.redirect('/donor/index');
+	 	response.render('/donor/editdonor/:id',{
+	 		donor:donor,
+	 		errors :error.errors
+
+	 	});
 	 });
 });
 
@@ -111,29 +117,34 @@ router.get('/editdonor/:id', function(request, response, next) {
 //Post Request for Edit/Update Donor 
 router.post('/editdonor/:id', function(request, response) {
 	Donor.findById(request.params.id).then(function(donor) {
-		donor.update(  {
-		firstname: request.body.firstname,
-		lastname: request.body.lastname,
-		address1: request.body.address1,
-		address2: request.body.address2,
-		city: request.body.city,
-		state: request.body.state,
-		zip: request.body.zip,
-		email: request.body.email,
-		phone: request.body.phone,
-		comment: request.body.comment
-		}
-	 ).then(function(donor) {
-	 	console.log(donor);
-	 	response.redirect('/donor/index');
-		}).catch(function(error) {
-			console.log(donor);
-			response.render('donor/editdonor', {
-				 donor:    donor
-			});
-		});
+		donor.update({
+			firstname: request.body.firstname,
+			lastname: request.body.lastname,
+			address1: request.body.address1,
+			address2: request.body.address2,
+			city: request.body.city,
+			state: request.body.state,
+			zip: request.body.zip,
+			email: request.body.email,
+			phone: request.body.phone,
+			comments: request.body.comments
+			}).then(function(donor) {
+		 		console.log(donor);
+			 	//******This is where I left
+			 	response.redirect('/donor/index')
+		 		
+			}).catch(function(error) {
+				console.log("BLACK PANTIES" +donor);
+				response.render('donor/editdonor', {
+			 	donor:donor,
+	 			errors :error.errors,
+			 	sponsored_students: {}
+		 	});
+		});	
 	});
-});
+})
+	
+
 
 // Get Request for Search for Donor
 router.get('/search', function(req, res) {

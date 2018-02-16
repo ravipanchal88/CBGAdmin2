@@ -17,7 +17,7 @@ var app = express();
 var dateFormat = require('dateformat');
 
 app.locals.date = function(date) {
-  return(dateFormat(date, 'dd mm yyyy'));
+  return(dateFormat(date, 'dd-mmm-yyyy'));
 };
 
 

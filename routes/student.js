@@ -43,8 +43,12 @@ router.get('/index', function(req, res) {
 //Get Request  for Add Student
 router.get('/addstudent', function(req, res, next) {
     console.log("on student page");
-    res.render('student/addstudent',{ title :' express student page'});
-});
+    res.render('student/addstudent', {
+    		student :{}
+	});
+});	
+
+
 
 //Post Request for Add Student Data
 router.post('/addstudent',uploadHandler.single('image'), function(request, response) {
@@ -53,7 +57,7 @@ router.post('/addstudent',uploadHandler.single('image'), function(request, respo
 		cbg_id: request.body.cbg_id,
 		standard: request.body.standard,
 		division: request.body.division,
-		aadharnbr: '123456',
+		aadharnbr: request.body.aadharnbr,
 		lastname: request.body.lastname,
 		firstname: request.body.firstname,
 		dob: request.body.dob,
@@ -77,7 +81,7 @@ router.post('/addstudent',uploadHandler.single('image'), function(request, respo
 		studycommitment: request.body.studycommitment,
 		activity: request.body.activity,
 		total:request.body.total,
-		comment: request.body.comment,
+		comments: request.body.comments,
 		imageFilename: (request.file && request.file.originalname),
 		IsSponsored: false,
 		IsActive: true
@@ -96,7 +100,7 @@ router.post('/addstudent',uploadHandler.single('image'), function(request, respo
 				ContentType: request.file.mimetype
 			}, function(error, data) {
 				JSON.stringify(student);
-				console.log(JSON.stringify(student));
+				//console.log(JSON.stringify(student));
 				s3.upload({
 					Bucket:     'cbgfoundation',
 					Key:        `studentimages/${student.cbg_id}-thumbnail`,
@@ -125,7 +129,6 @@ router.get('/editstudent/:id', function(request, response, next) {
 		if (student)
 	 		{
 	 			response.render('student/editstudent', {student: student})
-	 			console.log(student);
 	 		}
 		else
 			response.redirect('/');
@@ -163,7 +166,7 @@ router.post('/editstudent/:id', function(request, response) {
 			cbg_id: request.body.cbg_id,
 			standard: request.body.standard,
 			division: request.body.division,
-			aadharnbr: '123456',
+			aadharnbr: request.body.aadharnbr,
 			lastname: request.body.lastname,
 			firstname: request.body.firstname,
 			dob: request.body.dob,
@@ -187,16 +190,16 @@ router.post('/editstudent/:id', function(request, response) {
 			studycommitment: request.body.studycommitment,
 			activity: request.body.activity,
 			total:request.body.total,
-			comment: request.body.comment,
+			comments: request.body.comments,
 			IsActive: request.body.IsActive
-		}
-	 ).then(function(student) {
-	 	console.log(student);
-	 	response.redirect('/student/index');
+		}).then(function(student) {
+	 		console.log(student);
+	 		response.redirect('/student/index');
 		}).catch(function(error) {
 			//console.log(student);
 			response.render('student/editstudent', {
-				 student: student
+				student: student,
+				errors:  error.errors
 			});
 		});
 	});

@@ -5,20 +5,26 @@ module.exports = function(sequelize, DataTypes) {
       allowNull: false,
       validate: {
         notEmpty: {
-          msg: 'Please enter firstname'
+          msg: 'Please enter Donors First Name'
         }
       }
     },
     lastname: {
       type:      DataTypes.STRING,
-      allowNull: false
+      allowNull: false,
+      validate: {
+        notEmpty: {
+          msg: 'Please enter Donors Last Name'
+        }
+      }
+
     },
     address1: {
       type:      DataTypes.STRING,
       allowNull: true,
       validate: {
         notEmpty: {
-          msg: 'Please enter address line 1'
+          msg: 'Please enter Donors Address line 1'
         }
       } 
     },
@@ -32,7 +38,7 @@ module.exports = function(sequelize, DataTypes) {
       allowNull: false,
       validate: {
         notEmpty: {
-          msg: 'Please enter city'
+          msg: 'Please enter Donor City'
         }
       }
     },

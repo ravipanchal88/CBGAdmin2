@@ -58,7 +58,7 @@ module.exports = function(sequelize, DataTypes) {
       allowNull: true
     },
     aadharnbr: {
-      type:      DataTypes.STRING,
+      type:      DataTypes.BIGINT,
       allowNull: true
     },
     housetype: {
@@ -206,6 +206,9 @@ module.exports = function(sequelize, DataTypes) {
       },
       getStudentID : function() {
           return(this.student_id);
+      },
+      setDateFormat : function() {
+          return(this.dob, "dd-mmm-yyyy");
       }
     },
   })

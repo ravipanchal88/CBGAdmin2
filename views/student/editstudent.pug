@@ -62,7 +62,7 @@ block content
 									input.col-lg-10.form_txt(name='parentname', value=student.parentname , autofocus)
 								.form-group
 									label.col-lg-2.form_lbl(for='guardian_occupation') Occupation
-									input.col-lg-4.form_txt(name='guardian_occupation', type='text', value=student.guradian_occupation,autofocus)
+									input.col-lg-4.form_txt(name='guardian_occupation', type='text', value=student.guardian_occupation,autofocus)
 								.form-group
 									label.col-lg-2.form_lbl(for='income') Income(INR)
 									input.col-lg-4.form_txt(name='income', value=student.income, type='number' autofocus)
@@ -118,8 +118,8 @@ block content
 									label.col-lg-3.form_lbl(for='total') Total 
 									input.col-lg-3.form_txt(name='total',value=student.total)
 								.form-group
-									label.col-lg-3.form_lbl(for='comment') Comments
-									input.col-lg-9.form_txt(name='comment', value=student.comment)
+									label.col-lg-3.form_lbl(for='comments') Comments
+									input.col-lg-9.form_txt(name='comments', value=student.comments)
 						.panel.panel-default
 							.panel-body.panel-action
 								input.btn.btn-lg.btn-default.btn-primary(type='submit',value='Submit')
