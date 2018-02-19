@@ -20,92 +20,109 @@ var router   = express.Router();
 //Get for Home Page 
 
 router.get('/index', function(req, res) {
-	const page = req.query.page || 1;
-	var pageCount;
-	Student.findAndCountAll().then(function(result1){
-		console.log(result1);
-		pageCount = Math.ceil(result1.count / req.query.limit);
-		console.log("pageCount:"+ pageCount);
-	}).then(function(result){
-		Student.findAll({
-		limit:15,
-		offset:(((page)-1)*15)
-			}).then(function(result) {
-				res.render('student/index', {
-				students: result,
-				pageCount,
-				pages: paginate.getArrayPages(req)(10,pageCount,req.query.page)
+	if (req.user){	
+		const page = req.query.page || 1;
+		var pageCount;
+		Student.findAndCountAll().then(function(result1){
+			console.log(result1);
+			pageCount = Math.ceil(result1.count / req.query.limit);
+			console.log("pageCount:"+ pageCount);
+		}).then(function(result){
+			Student.findAll({
+			limit:15,
+			offset:(((page)-1)*15)
+				}).then(function(result) {
+					res.render('student/index', {
+					students: result,
+					pageCount,
+					pages: paginate.getArrayPages(req)(10,pageCount,req.query.page)
+				});
 			});
-		});
-	})
+		})
+	}
+	else
+		res.redirect('../user/login');
 });
 
 //Get Request  for Add Student
 router.get('/addstudent', function(req, res, next) {
     console.log("on student page");
-    res.render('student/addstudent', {
+    if(req.user){
+   		res.render('student/addstudent', {
     		student :{}
-	});
+		});
+	}
+	else
+		res.redirect('../user/login');
+
 });	
 
 //Get Request for Sponsored Students ['/student/index/sponsored']
 
 router.get('/sponsored', function(req, res) {
-	const page = req.query.page || 1;
-	var pageCount;
-	Student.findAndCountAll({
-		where :{
-			IsSponsored :'true'
-		}
-	}).then(function(result1){
-		console.log(result1);
-		pageCount = Math.ceil(result1.count / req.query.limit);
-		console.log("pageCount:"+ pageCount);
-	}).then(function(result){
-		Student.findAll({
+	if(req.user)
+	{	const page = req.query.page || 1;
+		var pageCount;
+		Student.findAndCountAll({
 			where :{
-				IsSponsored:'true'
-			},
-			limit:15,
-			offset:(((page)-1)*15)
-		}).then(function(result) {
-				res.render('student/index', {
-				students: result,
-				pageCount,
-				pages: paginate.getArrayPages(req)(10,pageCount,req.query.page)
+				IsSponsored :'true'
+			}
+		}).then(function(result1){
+			console.log(result1);
+			pageCount = Math.ceil(result1.count / req.query.limit);
+			console.log("pageCount:"+ pageCount);
+		}).then(function(result){
+			Student.findAll({
+				where :{
+					IsSponsored:'true'
+				},
+				limit:15,
+				offset:(((page)-1)*15)
+			}).then(function(result) {
+					res.render('student/index', {
+					students: result,
+					pageCount,
+					pages: paginate.getArrayPages(req)(10,pageCount,req.query.page)
+				});
 			});
-		});
-	})
+		})
+	}	
+	else
+		res.redirect('../user/login');
 });
 
 //Get Request for UN Sponsored Students ['/student/index/sponsored']
 
 router.get('/unsponsored', function(req, res) {
-	const page = req.query.page || 1;
-	var pageCount;
-	Student.findAndCountAll({
-		where :{
-			IsSponsored :'false'
-		}
-	}).then(function(result1){
-		console.log(result1);
-		pageCount = Math.ceil(result1.count / req.query.limit);
-		console.log("pageCount:"+ pageCount);
-	}).then(function(result){
-		Student.findAll({
+	if(req.user){
+		const page = req.query.page || 1;
+		var pageCount;
+		Student.findAndCountAll({
 			where :{
-				IsSponsored:'false'
-			},
-			limit:15,
-			offset:(((page)-1)*15)
-		}).then(function(result) {
-				res.render('student/index', {
-				students: result,
-				pageCount,
-				pages: paginate.getArrayPages(req)(10,pageCount,req.query.page)
+				IsSponsored :'false'
+			}
+		}).then(function(result1){
+			console.log(result1);
+			pageCount = Math.ceil(result1.count / req.query.limit);
+			console.log("pageCount:"+ pageCount);
+		}).then(function(result){
+			Student.findAll({
+				where :{
+					IsSponsored:'false'
+				},
+				limit:15,
+				offset:(((page)-1)*15)
+			}).then(function(result) {
+					res.render('student/index', {
+					students: result,
+					pageCount,
+					pages: paginate.getArrayPages(req)(10,pageCount,req.query.page)
+				});
 			});
-		});
-	})
+		})
+	}
+	else
+		res.redirect('../user/login');	
 });
 
 
@@ -183,39 +200,47 @@ router.post('/addstudent',uploadHandler.single('image'), function(request, respo
 
 //Get Request  for Edit/Update Student
 router.get('/editstudent/:id', function(request, response, next) {
-    console.log("On students EDIT page");
-	Student.findById(request.params.id).then(function(student){
-		if (student)
-	 		{
-	 			response.render('student/editstudent', {student: student})
-	 		}
-		else
-			response.redirect('/');
-	}).catch(function(err) {
-	 	response.redirect('/student/index');
-	 });
+	if(request.user){
+	    console.log("On students EDIT page");
+		Student.findById(request.params.id).then(function(student){
+			if (student)
+		 		{
+		 			response.render('student/editstudent', {student: student})
+		 		}
+			else
+				response.redirect('/');
+		}).catch(function(err) {
+		 	response.redirect('/student/index');
+		});
+	}
+	else
+		response.redirect('../../user/login');
 });
 
 
 //Get Request  for sponsor Student
 router.get('/sponsorstudent/:id', function(request, response, next) {
-    console.log("On  sponsor student method");
-	Student.findById(request.params.id).then(function(student){
-		if (student)
-	 		{
-	 			Donor.findAll().then(function(donor){
-	 				//console.log(donor);
-	 				response.render('student/sponsorstudent', {
-	 					student: student,
-	 					donors: donor
-	 				})
-	 			})
-	 		}
-		else
-			response.redirect('/');
-	}).catch(function(err) {
-	 	response.redirect('/student/index');
-	 });
+	if(request.user){	
+	    console.log("On  sponsor student method");
+		Student.findById(request.params.id).then(function(student){
+			if (student)
+		 		{
+		 			Donor.findAll().then(function(donor){
+		 				//console.log(donor);
+		 				response.render('student/sponsorstudent', {
+		 					student: student,
+		 					donors: donor
+		 				})
+		 			})
+		 		}
+			else
+				response.redirect('/');
+		}).catch(function(err) {
+		 	response.redirect('/student/index');
+		});
+	}
+	else
+		response.redirect('../../user/login');	
 });
 
 //Post Request for Edit/Update Student '/:id/edit'
@@ -283,37 +308,41 @@ router.post('/sponsorstudent/:id', function(request, response) {
 
 // Get Request for Search for Student
 router.get('/search', function(req, res) {
-	const page = req.query.page || 1;
-	const itemCount = 11;
-	const pageCount = Math.ceil(itemCount / req.query.limit);
-	// console.log('this is page Count:'+ pageCount);
-	// console.log("Search test");
-	var query     = req.query.query;
-	var condition = `%${query}%`;
-	console.log("Search test2");
-	Student.findAndCountAll({
-		limit:10,
-		offset:((page)-1)*10,
-		where: {
-			$or: {
-				firstname: {
-					$iLike: condition
-				},
-				lastname: {
-					$iLike: condition
+	if(req.user){
+		const page = req.query.page || 1;
+		const itemCount = 11;
+		const pageCount = Math.ceil(itemCount / req.query.limit);
+		// console.log('this is page Count:'+ pageCount);
+		// console.log("Search test");
+		var query     = req.query.query;
+		var condition = `%${query}%`;
+		console.log("Search test2");
+		Student.findAndCountAll({
+			limit:10,
+			offset:((page)-1)*10,
+			where: {
+				$or: {
+					firstname: {
+						$iLike: condition
+					},
+					lastname: {
+						$iLike: condition
+					}
 				}
 			}
-		}
-	}).then(function(result) {
-		res.render('student/searchstudent', {
-			query: query,
-			count: result.count,
-			students: result.rows,
-			pageCount,
-			itemCount,
-			pages: paginate.getArrayPages(req)(5,pageCount,req.query.page)
+		}).then(function(result) {
+			res.render('student/searchstudent', {
+				query: query,
+				count: result.count,
+				students: result.rows,
+				pageCount,
+				itemCount,
+				pages: paginate.getArrayPages(req)(5,pageCount,req.query.page)
+			});
 		});
-	});
+	}
+	else
+		res.redirect('../user/login');	
 });
 
 module.exports = router;

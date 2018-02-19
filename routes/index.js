@@ -19,31 +19,35 @@ router.get('/', function(req, res, next) {
 
 //Get for Home Page 
 router.get('/index', function(req, res, next) {
-	Student.findAndCountAll({
-	 		where: {
-		 			IsSponsored: true
-		 			}
-		}).then(function(result){
-			Student.findAndCountAll({
-	   		where: {
-					IsSponsored: false
-					}
-			}).then(function(result1) {
-				Sponsorship.sum('amount',{
-				}).then(function(result3){
-					Donor.findAndCountAll({
-						}).then(function(result2){
-							res.render('index', {
-							students: result,
-							stud_count: result.count, //Count for all sponsored students
-							unspon_count: result1.count, // Count for unsponsored Students
-							donor_count: result2.count, // Count for donor
-							donor_amount: result3
-					})
-				})	
-			})
+	if (req.user){	
+		Student.findAndCountAll({
+		 		where: {
+			 			IsSponsored: true
+			 			}
+			}).then(function(result){
+				Student.findAndCountAll({
+		   		where: {
+						IsSponsored: false
+						}
+				}).then(function(result1) {
+					Sponsorship.sum('amount',{
+					}).then(function(result3){
+						Donor.findAndCountAll({
+							}).then(function(result2){
+								res.render('index', {
+								students: result,
+								stud_count: result.count, //Count for all sponsored students
+								unspon_count: result1.count, // Count for unsponsored Students
+								donor_count: result2.count, // Count for donor
+								donor_amount: result3
+						})
+					})	
+				})
+			});
 		});
-	});
+	}
+	else
+		res.redirect('user/login');	
 });
 
 

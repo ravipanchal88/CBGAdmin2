@@ -50,23 +50,19 @@ app.use(passport.initialize());
 app.use(passport.session());
 app.use(flash());
 
+//Middleware
 app.use(function(request, response, next) {
-  //console.log("currentUser");
+  console.log("currentUser");
   response.locals.currentUser = request.user;
-  //console.log(request.user);
+  console.log(request.user);
+  console.log("current user :" +  response.locals.currentUser)
   next();
 });
-
-
 
 app.use('/', index);
 app.use('/user', users);
 app.use('/student',student);
 app.use('/donor',donor);
-
-
-// Middleware.
-
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
