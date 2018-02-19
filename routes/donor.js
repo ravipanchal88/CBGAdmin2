@@ -4,7 +4,6 @@ var models  = require('../models/index');
 var Donor = models.donor;
 var Sponsorship = models.sponsorship;
 var Student = models.student;
-
 var router = express.Router();
 
 /* GET for unauthorized users  */
@@ -34,7 +33,7 @@ router.get('/index', function(req, res) {
 
 //Get Request  for Add Donors
 router.get('/adddonor', function(req, res, next) {
-    console.log("on donor page");
+    //console.log("On Donor Page");
     res.render('donor/adddonor', { 
     	donor: {}
 	});
@@ -43,8 +42,8 @@ router.get('/adddonor', function(req, res, next) {
 //Post Request for Add Donor
 router.post('/adddonor', function(request, response) {
 	console.log("In add Donor POST Method");
-	console.log(Donor);
-	console.log(request.body.address1);
+	// console.log(Donor);
+	// console.log(request.body.address1);
 	// console.log(request.body.gender);
 	Donor.create({
 		firstname: request.body.firstname,
@@ -58,7 +57,7 @@ router.post('/adddonor', function(request, response) {
 		phone: request.body.phone,
 		comments: request.body.comments
 	}).then(function(donor) {
-		console.log("donor was Added");
+		console.log("Note: Donor was Added");
 		response.redirect('/donor/index');
 	}).catch(function(error) {
 		console.log('NOTE: Donor was not added');
@@ -130,11 +129,8 @@ router.post('/editdonor/:id', function(request, response) {
 			comments: request.body.comments
 			}).then(function(donor) {
 		 		console.log(donor);
-			 	//******This is where I left
 			 	response.redirect('/donor/index')
-		 		
 			}).catch(function(error) {
-				console.log("BLACK PANTIES" +donor);
 				response.render('donor/editdonor', {
 			 	donor:donor,
 	 			errors :error.errors,

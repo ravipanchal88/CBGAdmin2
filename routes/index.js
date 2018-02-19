@@ -1,7 +1,7 @@
 var express = require('express');
-var models   = require('../models/index');
-var Student  = models.student;
-var Donor    = models.donor;
+var models  = require('../models/index');
+var Student = models.student;
+var Donor   = models.donor;
 var Sponsorship = models.sponsorship;
 var router = express.Router();
 
@@ -43,7 +43,18 @@ router.get('/index', function(req, res, next) {
 				})	
 			})
 		});
-	});			
+	});
 });
+
+
+//Get for Aggregation 
+router.get('/index/dollarraised', function(req, res, next) {
+	Donor.findAll({
+		include: { model:Sponsorship}
+	}).then(function(result){
+		console.log(result);
+	})
+});
+
 
 module.exports = router;

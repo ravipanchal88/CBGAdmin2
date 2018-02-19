@@ -1,5 +1,5 @@
 module.exports = function(sequelize, DataTypes) {
-  var Sponsorship = sequelize.define('sponsorship', {
+  return(sequelize.define('sponsorship', {
     student_id: {
       type:      DataTypes.INTEGER,
       allowNull: false
@@ -31,12 +31,7 @@ module.exports = function(sequelize, DataTypes) {
     defaultScope: {
         //order: [['createdAt', 'ASC']]
         },
-      classMethods: {
-        associate: function(models) {
-          models.sponsorship.hasMany(models.student);
-          models.sponsorship.belongsTo(models.donor);
-        }
-      }, 
+      
       getterMethods: {
         url: function() {
         return(`/student/sponsorstudent/${this.slug}`);
@@ -45,18 +40,33 @@ module.exports = function(sequelize, DataTypes) {
           return(this.student_id);
         },
         findWithStudentId: function(student_id) {
-        return(this.findAll({
-          where: {
-                Id: student_id
-          },
+          return(this.findAll({
+            where: {
+              Id: student_id
+            },
           include: [
           // sequelize.models.user,
             sequelize.models.student
-          ],
-        }));
-      } 
+          ]
+          }));
+        }
+      },
+      classMethods: {
+        associate: function(models) {
+          models.sponsorship.belongsTo(model.student);
+          models.sponsorship.belongsTo(model.donor);
       }
-    })
-    return(Sponsorship);
-};
+    },
+    // classMethods: {
+    //   associate: function(models) {
+    //    models.sponsorship.belongsToMany(models.donor,{
+    //     foreignKey:"donor_id", as: "Donor"
+    //    });
+    //    // models.donor.belongsTo(models.student);
+    //  }
+    // },
+  }));
+}; 
+
+
 

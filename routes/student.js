@@ -48,6 +48,65 @@ router.get('/addstudent', function(req, res, next) {
 	});
 });	
 
+//Get Request for Sponsored Students ['/student/index/sponsored']
+
+router.get('/sponsored', function(req, res) {
+	const page = req.query.page || 1;
+	var pageCount;
+	Student.findAndCountAll({
+		where :{
+			IsSponsored :'true'
+		}
+	}).then(function(result1){
+		console.log(result1);
+		pageCount = Math.ceil(result1.count / req.query.limit);
+		console.log("pageCount:"+ pageCount);
+	}).then(function(result){
+		Student.findAll({
+			where :{
+				IsSponsored:'true'
+			},
+			limit:15,
+			offset:(((page)-1)*15)
+		}).then(function(result) {
+				res.render('student/index', {
+				students: result,
+				pageCount,
+				pages: paginate.getArrayPages(req)(10,pageCount,req.query.page)
+			});
+		});
+	})
+});
+
+//Get Request for UN Sponsored Students ['/student/index/sponsored']
+
+router.get('/unsponsored', function(req, res) {
+	const page = req.query.page || 1;
+	var pageCount;
+	Student.findAndCountAll({
+		where :{
+			IsSponsored :'false'
+		}
+	}).then(function(result1){
+		console.log(result1);
+		pageCount = Math.ceil(result1.count / req.query.limit);
+		console.log("pageCount:"+ pageCount);
+	}).then(function(result){
+		Student.findAll({
+			where :{
+				IsSponsored:'false'
+			},
+			limit:15,
+			offset:(((page)-1)*15)
+		}).then(function(result) {
+				res.render('student/index', {
+				students: result,
+				pageCount,
+				pages: paginate.getArrayPages(req)(10,pageCount,req.query.page)
+			});
+		});
+	})
+});
 
 
 //Post Request for Add Student Data

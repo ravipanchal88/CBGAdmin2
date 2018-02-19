@@ -7,20 +7,19 @@ block content
 				.item1
 					p # Sponsored Students
 					h1= stud_count
-					a.btn.btn-primary(href='#') See Details
+					a.btn.btn-primary(href='/student/sponsored') See Details
 			.col-lg-4
 				.item2
 					p Number of Donors
 					h1= donor_count
-					a.btn.btn-primary(href='#') See Details
+					a.btn.btn-primary(href='/donor/index') See Details
 			.col-lg-4
 				.item3
 					p $ Raised
 					h1 $ 
 						=donor_amount
-					a.btn.btn-primary(href='#') See Details
 			.col-lg-4
 				.item4
 					p Unsponsored Students
 					h1= unspon_count
-					a.btn.btn-primary(href='#') See Details	
+					a.btn.btn-primary(href='/student/unsponsored') See Details

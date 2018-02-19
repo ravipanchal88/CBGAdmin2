@@ -24,12 +24,18 @@ fs
     db[model.name] = model;
   });
 
-Object.keys(db).forEach(modelName => {
+Object.keys(db).forEach(function(modelName) {
+  //console.log("Model Exist: "+modelName);
   if (db[modelName].associate) {
     db[modelName].associate(db);
   }
+
 });
 
 db.sequelize = sequelize;
 db.sequelize = Sequelize;
+
+//sequelize.sync({force:true});
+// db.sync({force:true});
+
 module.exports = db;

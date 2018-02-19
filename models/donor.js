@@ -1,5 +1,5 @@
 module.exports = function(sequelize, DataTypes) {
-  var Donor = sequelize.define('donor', {
+  return(sequelize.define('donor', {
     firstname: {
       type:      DataTypes.STRING,
       allowNull: false,
@@ -72,24 +72,25 @@ module.exports = function(sequelize, DataTypes) {
       type:      DataTypes.STRING,
       allowNull: true
     }
-  }, {
+  }, 
+  {
     defaultScope: {
       order: [['firstname', 'asc']]
     },
-
-  classMethods: {
-      associate: function(models) {
-        models.donor.belongsTo(models.student);
-        models.student.belongsTo(models.sponsorship);
-      }
-    }, 
-
+  
     getterMethods: {
       url: function() {
         return(`/donor/index/${this.slug}`);
       }
     },
-  })
-  return(Donor);
-};
 
+    classMethods: {
+      associate: function(models) {
+       models.donor.hasMany(models.sponsorship,{
+        foreignKey:"donor_id", as: "Sponsorship"
+       });
+       models.donor.belongsTo(models.student);
+     }
+    },
+  }));
+}; 
