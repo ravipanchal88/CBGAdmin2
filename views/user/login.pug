@@ -5,11 +5,11 @@ html
 		link(rel='stylesheet', href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css")
 		link(rel='stylesheet', href='/stylesheets/style.css')
 		script(src='https://use.fontawesome.com/a3a71a0323.js')
-		script(src='/javascripts/jquery.js')
-		script(src='/javascripts/login.js')
-		script(src='/javascripts/bootstrap.js')
-		script(src='/javascripts/cookies.js')
-		script(src='/javascripts/application.js')
+		script(src='/javascripts/jquery/jquery.js')
+		script(src='/javascripts/jquery/login.js')
+		//script(src='/javascripts/jquery/bootstrap.js')
+		script(src='/javascripts/jquery/cookies.js')
+		//script(src='/javascripts/application.js')
 	body
 	block content
 		.fluid-container
@@ -17,8 +17,8 @@ html
 				.video-container
 					.filter
 					video(autoplay loop)
-						source(src='../public/images/On-The-Ganges/mp4/On-The-Ganges.mp4', type='video/mp4')
-						source(src='../public/images/On-The-Ganges/WEBM/On-The-Ganges.webms', type='video/webm')
+						source(src='../images/On-The-Ganges/mp4/On-The-Ganges.mp4', type='video/mp4')
+						source(src='../images/On-The-Ganges/WEBM/On-The-Ganges.webms', type='video/webm')
 					.poster hidden
 					.col-lg-8.col-md-8.login_form
 						h1.login_text CBG Admin Portal
@@ -33,6 +33,6 @@ html
 								input.form-control.login_input(name='password', type='password')
 							.form-group
 								input.btn.btn-primary.btn-lg.login_button(type='submit', value='Log In')
-					.col-lg-12/col-md-12.footer
+					.col-lg-12.col-md-12.footer
 						p IRS 501(C’)(3) Organization © CBG Foundation 2017-18 - All rights reserved
 						a(href='/user/signup') Sign Up			
