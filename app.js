@@ -2,11 +2,10 @@ var express = require('express');
 var path = require('path');
 var favicon = require('serve-favicon');
 var logger = require('morgan');
-
 var bodyParser = require('body-parser');
-var cookieParser = require('cookie-parser');
 //NPM Packages for Authentication
 var session      = require('express-session');
+var cookieParser = require('cookie-parser');
 var passport     = require('passport');
 var flash = require('connect-flash');
 var paginate = require('express-paginate');
@@ -43,8 +42,9 @@ app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
-//app.use(express.static(path.join(__dirname, 'public')));
-app.use(express.static(__dirname + '/public'));
+app.use(express.static(path.join(__dirname, 'public')));
+console.log('Static Path:'+path.join(__dirname, 'public'));
+//app.use(express.static(__dirname + '/public'));
 
 //Middleware for Passport
 app.use(session({secret: 'wwerwjflwnfkjhwjkrhewjkrhewjkrhjw12'}));
@@ -54,10 +54,8 @@ app.use(flash());
 
 //Middleware
 app.use(function(request, response, next) {
-  console.log("currentUser");
+ // console.log("currentUser");
   response.locals.currentUser = request.user;
-  console.log(request.user);
-  console.log("current user :" +  response.locals.currentUser)
   next();
 });
 

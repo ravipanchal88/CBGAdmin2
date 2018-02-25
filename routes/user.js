@@ -19,21 +19,29 @@ var router   = express.Router();
 
 // Passport.
 passport.use(
-	new local.Strategy(
+	new local.Strategy({
+		username:'email',
+		password:'password',
+		session: false
+	},
 		function(email, password, done) {
-	    User.findOne({
+			console.log('In passport use function');
+	    	User.findOne({
 				where: {
 					email: email
 				}
 			}).then(function(user) {
-	      if (!user) {
-	        return(done(null, false, {message: 'A user with that email does not exist.'}));
-	    }
-	      else {
-				bcrypt.compare(password, user.password, function(error, result) {
-				if (result)
-				    return(done(null, user));
-				else
+	      			if (!user) {
+	      			console.log('User Does Not Exist');
+	        		return(done(null, false, {message: 'A user with that email does not exist.'}));
+	    			}
+	      			else {
+	      				console.log('User Exist');
+						bcrypt.compare(password, user.password, function(error, result) {
+							if (result){
+				    			return(done(null, user));
+				    		}
+							else
 			        return(done(null, false, {message: 'Incorrect password.'}));
 	        	});
 			}
@@ -86,17 +94,35 @@ router.get('/login', function(request, response) {
 	response.render('user/login')
 });
 
-router.post('/login', passport.authenticate('local'),function(request, response) {
-	console.log("Login Loop 1");
-	response.redirect('/index');
-});
+//Post Request for Login 1
+// router.post('/login', passport.authenticate('local'),function(request, response) {
+// 	console.log("Login Loop 1");
+// 	response.redirect('/index');
+// });
+
+//Post Request for Login 2
+router.post('/login', passport.authenticate('local',
+	{ successRedirect: '/index',
+      failureRedirect: ('../user/login'),
+      failureMessage: 'Invalid username or password.'})
+);
 
 
-// router.post('/login', passport.authenticate('local',
-// 	{ successRedirect: '/index',
-//       failureRedirect: 'user/login'
-//       failureFlash: 'Invalid username or password.'})
-// );
+//Post Request for Login 3
+// router.post('/login', function(req,res,next){
+// 	console.log('In LOGIN POST LOOP');
+// 	passport.authenticate('local',function(err,user,info){
+// 		if(err){
+// 			return next(err)}
+// 		if(!user){
+// 			return res.render('../user/login', { message : info.message})
+// 		}	
+// 		else {
+// 			return res.redirect('index/');
+// 		}
+// 		console.log(result)
+// 	});
+// });
 
 
 

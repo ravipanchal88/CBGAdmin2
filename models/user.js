@@ -46,12 +46,6 @@ module.exports = function(sequelize, DataTypes) {
       }
     } 
   
-  //   {
-  //   classMethods: {
-  //     associate: function(models) {
-  //       models.user.hasMany(models.imagepost);
-  //     }
-  //   }
    })
 
   return(User);

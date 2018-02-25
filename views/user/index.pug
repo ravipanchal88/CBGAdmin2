@@ -23,6 +23,7 @@ html
 					.col-lg-8.col-md-8.login_form
 						h1.login_text CBG Admin Portal
 						h3.login_text Login
+						include ../errors
 						form(action='/user/login', method='post')
 							.form-group
 								label.login_text(for='username') Email
