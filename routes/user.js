@@ -70,7 +70,7 @@ router.get('/signup', function(request, response) {
 router.post('/signup', function(request, response) {
 	bcrypt.hash(request.body.password, 10, function(error, password) {
 		console.log("I am here for Checking Signup Loop")
-		console.log(User);
+		//console.log(User);
 		User.create({
 			email:    request.body.email,
 			password: password,

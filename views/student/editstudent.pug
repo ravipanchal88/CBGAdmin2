@@ -13,22 +13,29 @@ block content
 			.col-lg-9.col-md-10
 				.panel-group
 					include ../errors
-					form(action=`/student/editstudent/${student.id}`, method='post')
+					form(action=`/student/editpic/${student.id}`,  method='post' , enctype='multipart/form-data')
 						.panel.panel-default
 							.panel-heading General Information
 							.panel-body
 								.row
 									.col-lg-9.col-md-10
 										.form-group
-											.col-lg-6
+											.col-lg-12
 												p: img.imgbox(src=student.imageThumbnailUrl)
-										.form-group
-											label.col-lg-4.form_lbl(for='IsActive') Enrollment Status
-											select#isactive.col-lg-2.form_txt(type='select' name='IsActive' required='true')
-												option(value='true', selected=(student.IsActive==true) ? true : false)
-													| Active
-												option(value='false',  selected=(student.IsActive==false) ? true : false)
-													| InActive
+												input.col-lg-6.form_txt(name='image', type='file',value=student.image autofocus)
+												input.btn.btn-sm.btn-default(type='submit',value='UpdatePic')
+					form(action=`/student/editstudent/${student.id}`,  method='post')
+						.panel.panel-default
+							.panel-heading General Information
+							.panel-body
+								.row
+									.form-group
+										label.col-lg-4.form_lbl(for='IsActive') Enrollment Status
+										select#isactive.col-lg-2.form_txt(type='select' name='IsActive' required='true')
+											option(value='true', selected=(student.IsActive==true) ? true : false)
+												| Active
+											option(value='false',  selected=(student.IsActive==false) ? true : false)
+												| InActive
 								.form-group
 									label.col-lg-2.form_lbl(for='cbg_id') CBG_ID
 									input.col-lg-2.form_txt(name='cbg_id', value=student.cbg_id, type='number' autofocus)

@@ -128,7 +128,17 @@ router.get('/unsponsored', function(req, res) {
 
 //Post Request for Add Student Data
 router.post('/addstudent',uploadHandler.single('image'), function(request, response) {
-	//console.log("In Add Student POST Method");
+	console.log("In Add Student POST Method");
+	//console.log(request.file.buffer);
+	if(request.file)
+	{
+		console.log(request.file);
+		var imageBuffer = request.file.buffer;
+		var originalfilename = request.file.originalfilename;
+	}
+	else {
+		var originalfilename ='noimage.jpg';
+	}
 	Student.create({
 		cbg_id: request.body.cbg_id,
 		standard: request.body.standard,
@@ -158,36 +168,44 @@ router.post('/addstudent',uploadHandler.single('image'), function(request, respo
 		activity: request.body.activity,
 		total:request.body.total,
 		comments: request.body.comments,
-		imageFilename: (request.file && request.file.originalname),
+		imageFilename: originalfilename,
 		IsSponsored: false,
 		IsActive: true
 	}).then(function(student) {
-		sharp(request.file.buffer)
-		.resize(250,250)
-		.max()
-		.withoutEnlargement()
-		.toBuffer()
-		.then(function(thumbnail) {
-			s3.upload({
-				Bucket:     'cbgfoundation',
-				Key:        `studentimages/${student.cbg_id}`,
-				Body:        request.file.buffer,
-				ACL:        'public-read',
-				ContentType: request.file.mimetype
-			}, function(error, data) {
-				JSON.stringify(student);
-				//console.log(JSON.stringify(student));
+		//sharp(request.file.buffer)
+		//console.log(request.file);
+		if(request.file){
+			sharp(imageBuffer)
+			.resize(250,250)
+			.max()
+			.withoutEnlargement()
+			.toBuffer()
+			.then(function(thumbnail) {
 				s3.upload({
 					Bucket:     'cbgfoundation',
-					Key:        `studentimages/${student.cbg_id}-thumbnail`,
-					Body:        thumbnail,
+					Key:        `studentimages/${student.cbg_id}`,
+					Body:        request.file.buffer,
 					ACL:        'public-read',
 					ContentType: request.file.mimetype
 				}, function(error, data) {
-					response.redirect('/student/index');
+					JSON.stringify(student);
+					//console.log(JSON.stringify(student));
+					s3.upload({
+						Bucket:     'cbgfoundation',
+						Key:        `studentimages/${student.cbg_id}-thumbnail`,
+						Body:        thumbnail,
+						ACL:        'public-read',
+						ContentType: request.file.mimetype
+					}, function(error, data) {
+						response.redirect('/student/index');
+					});
 				});
 			});
-		});
+		}
+		else{
+			console.log('NOTE: Student "Added without IMAGE :');
+			response.redirect('/student/index');
+		}
 	}).catch(function(error) {
 		console.log('NOTE: "STUDENT WAS NOT ADDED "');
 		response.render('student/addstudent', {
@@ -287,6 +305,52 @@ router.post('/editstudent/:id', function(request, response) {
 			});
 		});
 	});
+});
+
+
+
+//Update Pic 
+router.post('/editpic/:id', uploadHandler.single('image'),function(request, response) {
+	Student.findById(request.params.id).then(function(student) {
+		console.log(student);
+		student.update(  {
+			imageFilename: (request.file && request.file.originalname)
+			}).then(function(student) {
+				sharp(request.file.buffer)
+				.resize(250,250)
+				.max()
+				.withoutEnlargement()
+				.toBuffer()
+				.then(function(thumbnail) {
+					s3.upload({
+						Bucket:     'cbgfoundation',
+						Key:        `studentimages/${student.cbg_id}`,
+						Body:        request.file.buffer,
+						ACL:        'public-read',
+						ContentType: request.file.mimetype
+					}, function(error, data) {
+						JSON.stringify(student);
+						//console.log(JSON.stringify(student));
+						s3.upload({
+							Bucket:     'cbgfoundation',
+							Key:        `studentimages/${student.cbg_id}-thumbnail`,
+							Body:        thumbnail,
+							ACL:        'public-read',
+							ContentType: request.file.mimetype
+						}, function(error, data) {
+							response.redirect('/student/index');
+						});
+					});
+				});
+			}).catch(function(error) {
+				console.log('NOTE: "STUDENT WAS NOT ADDED "');
+				response.render('student/editstudent', {
+					student: student,
+					errors:  error.errors
+				})
+					
+		})
+	})	
 });
 
 //Post Request for Sponsoring Student '/:id/sponsor'  `/student/sponsorstudent/${student.id}

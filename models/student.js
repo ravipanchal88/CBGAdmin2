@@ -91,13 +91,7 @@ module.exports = function(sequelize, DataTypes) {
     },
     imageFilename: {
       type:         DataTypes.STRING,
-      allowNull:    false,
-      defaultValue: '',
-      validate: {
-        notEmpty: {
-          msg: 'Image is required'
-        }
-      }
+      allowNull:    true
     },
     IsSponsored: {
       type: DataTypes.BOOLEAN,
@@ -111,7 +105,7 @@ module.exports = function(sequelize, DataTypes) {
       defaultValue: '',
       validate: {
           notEmpty: {
-            msg: 'CBG ID is required'
+            msg: 'CBG ID is Required'
           }
       }
     },
