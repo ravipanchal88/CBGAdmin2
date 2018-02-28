@@ -123,13 +123,7 @@ module.exports = function(sequelize, DataTypes) {
 
     division :{
       type: DataTypes.STRING,
-      allowNull: false,
-      defaultValue: '',
-      validate: {
-          notEmpty: {
-            msg: 'division is required'
-          }
-      }
+      allowNull: true
     },
 
     guardian_occupation :{
@@ -179,7 +173,7 @@ module.exports = function(sequelize, DataTypes) {
 ////
   }, {
     defaultScope: {
-      order: [['firstname', 'asc']]
+      order: [['cbg_id', 'asc']]
     },
     classMethods: {
       associate: function(models) {

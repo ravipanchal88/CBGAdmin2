@@ -28,7 +28,8 @@ router.get('/index', function(req, res) {
 		var pageCount;
 		Donor.findAndCountAll().then(function(result1){
 			console.log(result1);
-			pageCount = Math.ceil(result1.count / req.query.limit);
+			//pageCount = Math.ceil(result1.count / req.query.limit);
+			pageCount = Math.ceil(result1.count / 15);
 			console.log("pageCount:"+ pageCount);
 		}).then(function(result1){
 			Donor.findAll({
@@ -177,7 +178,8 @@ router.get('/search', function(req, res) {
 		var condition = `%${query}%`;
 		Donor.findAndCountAll().then(function(result1){
 			console.log(result1);
-			pageCount = Math.ceil(result1.count / req.query.limit);
+			//pageCount = Math.ceil(result1.count / req.query.limit);
+			pageCount = Math.ceil(result1.count / 15);
 			console.log("pageCount:"+ pageCount);
 		}).then(function(result1){
 			Donor.findAndCountAll({
@@ -194,6 +196,7 @@ router.get('/search', function(req, res) {
 					}
 				}
 			}).then(function(result) {
+
 				res.render('donor/searchdonor', {
 					query: query,
 					count: result.count,

@@ -10,10 +10,10 @@ if paginate.hasPreviousPages || paginate.hasNextPages(pageCount)
             .previous
               a.btn-lg()
                 i.fa.fa-arrow-circle-left
-        .col-lg-3.col-md-3
+        .col-lg-9.col-md-9
           if pages
             each page in pages
-              a.btn-lg.btn-primary.pagenbr(href=page.url)= page.number
+              a.btn.btn-primary.pagenbr(href=page.url)= page.number   
         .col-lg-3.col-md-3  
           if paginate.hasNextPages(pageCount)
             .next
@@ -21,4 +21,4 @@ if paginate.hasPreviousPages || paginate.hasNextPages(pageCount)
           else
             .previous
               a.btn-lg()
-                i.fa.fa-arrow-circle-right      
+                i.fa.fa-arrow-circle-right

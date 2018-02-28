@@ -24,10 +24,12 @@ router.get('/index', function(req, res) {
 		const page = req.query.page || 1;
 		var pageCount;
 		Student.findAndCountAll().then(function(result1){
-			console.log(result1);
-			pageCount = Math.ceil(result1.count / req.query.limit);
+			//console.log(result1);
+			//pageCount = Math.ceil(result1.count / req.query.limit);
+			pageCount = Math.ceil(result1.count / 15);
 			console.log("pageCount:"+ pageCount);
 		}).then(function(result){
+			console.log('PANTIES:'+page);
 			Student.findAll({
 			limit:15,
 			offset:(((page)-1)*15)
@@ -35,6 +37,7 @@ router.get('/index', function(req, res) {
 					res.render('student/index', {
 					students: result,
 					pageCount,
+					page,
 					pages: paginate.getArrayPages(req)(10,pageCount,req.query.page)
 				});
 			});
@@ -69,7 +72,8 @@ router.get('/sponsored', function(req, res) {
 			}
 		}).then(function(result1){
 			console.log(result1);
-			pageCount = Math.ceil(result1.count / req.query.limit);
+			//pageCount = Math.ceil(result1.count / req.query.limit);
+			pageCount = Math.ceil(result1.count / 15);
 			console.log("pageCount:"+ pageCount);
 		}).then(function(result){
 			Student.findAll({
@@ -103,7 +107,8 @@ router.get('/unsponsored', function(req, res) {
 			}
 		}).then(function(result1){
 			console.log(result1);
-			pageCount = Math.ceil(result1.count / req.query.limit);
+			//pageCount = Math.ceil(result1.count / req.query.limit);
+			pageCount = Math.ceil(result1.count / 15);
 			console.log("pageCount:"+ pageCount);
 		}).then(function(result){
 			Student.findAll({
@@ -375,15 +380,18 @@ router.get('/search', function(req, res) {
 	if(req.user){
 		const page = req.query.page || 1;
 		const itemCount = 11;
-		const pageCount = Math.ceil(itemCount / req.query.limit);
+		//const pageCount = Math.ceil(itemCount / req.query.limit);
+		
+
 		// console.log('this is page Count:'+ pageCount);
 		// console.log("Search test");
 		var query     = req.query.query;
 		var condition = `%${query}%`;
 		console.log("Search test2");
 		Student.findAndCountAll({
-			limit:10,
-			offset:((page)-1)*10,
+			limit:15,
+			
+			offset:(((page)-1)*15),
 			where: {
 				$or: {
 					firstname: {
@@ -395,6 +403,7 @@ router.get('/search', function(req, res) {
 				}
 			}
 		}).then(function(result) {
+			const pageCount = Math.ceil(result.count / 15);
 			res.render('student/searchstudent', {
 				query: query,
 				count: result.count,
