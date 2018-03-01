@@ -29,7 +29,7 @@ router.get('/index', function(req, res) {
 			pageCount = Math.ceil(result1.count / 15);
 			console.log("pageCount:"+ pageCount);
 		}).then(function(result){
-			console.log('PANTIES:'+page);
+			console.log('PAGE'+page);
 			Student.findAll({
 			limit:15,
 			offset:(((page)-1)*15)

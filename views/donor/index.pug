@@ -15,25 +15,13 @@ block content
 						input.form-control(name='query', placeholder='Search Donor')
 						input.btn.btn-default(type='submit', value='search')
 		.row
-			.col-lg-9.col-md-9
-				table.table-hover.table-cbg
-					thead
-						tr
-							th First Name
-							th Last  Name
-							th Email
-							th City
-							th Phone
-					tbody
-						each donor in donors
-							tr
-								td=donor.firstname
-								td=donor.lastname
-								td=donor.email
-								td=donor.city
-								td=donor.phone
-								td
-									a.btn.btn-primary.btn-xs(href=`/donor/editdonor/${donor.id}`) View/Update
+			.col-lg-12.col-md-12.col-sm-12.contentbox
+				each donor in donors
+					.col-lg-3.col-md-3.donorinnerbox
+						h4= donor.firstname+' '+donor.lastname
+						p= donor.city+','+donor.state
+						h5= donor.email
+						a.btn.btn-primary.btn-xs(href=`/donor/editdonor/${donor.id}`) View/Update
 		.row
 			.col-lg-9.col-md-9
 				include _paginate

@@ -11,28 +11,28 @@ html
 		script(src='/javascripts/jquery/cookies.js')
 		//script(src='/javascripts/application.js')
 	body
-	block content
-		.fluid-container
-			.homepage-hero-module
-				.video-container
-					.filter
-					video(autoplay loop)
-						source(src='/images/On-The-Ganges/MP4/On-The-Ganges.mp4', type='video/mp4')
-						source(src='/images/On-The-Ganges/WEBM/On-The-Ganges.webms', type='video/webm')
-					.poster hidden
-					.col-lg-8.col-md-8.login_form
-						h1.login_text CBG Admin Portal
-						h3.login_text Login
-						include ../errors
-						form(action='/user/login', method='post')
-							.form-group
-								label.login_text(for='username') Email
-								input.form-control.login_input(name='username', autofocus)
-							.form-group
-								label.login_text(for='password') Password
-								input.form-control.login_input(name='password', type='password')
-							.form-group
-								input.btn.btn-primary.btn-lg.login_button(type='submit', value='Log In')
-					.col-lg-12.col-md-12.footer
-						p IRS 501(C’)(3) Organization © CBG Foundation 2017-18 - All rights reserved
-						a(href='/user/signup') Sign Up			
+		block content
+			.fluid-container
+				.homepage-hero-module
+					.video-container
+						.filter
+						video(autoplay loop)
+							source(src='/images/On-The-Ganges/MP4/On-The-Ganges.mp4', type='video/mp4')
+							source(src='/images/On-The-Ganges/WEBM/On-The-Ganges.webms', type='video/webm')
+						.poster hidden
+						.col-lg-8.col-md-8.login_form
+							h1.login_text CBG Admin Portal
+							h3.login_text Login
+							include ../errors
+							form(action='/user/login', method='post')
+								.form-group
+									label.login_text(for='username') Email
+									input.form-control.login_input(name='username', autofocus)
+								.form-group
+									label.login_text(for='password') Password
+									input.form-control.login_input(name='password', type='password')
+								.form-group
+									input.btn.btn-primary.btn-lg.login_button(type='submit', value='Log In')
+						.col-lg-12.col-md-12.footer
+							p IRS 501(C’)(3) Organization © CBG Foundation 2017-18 - All rights reserved
+							a(href='/user/signup') Sign Up			
