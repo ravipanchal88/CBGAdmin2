@@ -20,6 +20,7 @@ html
 		.row
 			.col-lg-8.col-md-8.register_form
 				h5 Forgot Password
+				p Enter your email address below and we'll send you a link to reset your password.
 				if(messages)
 					include errors
 				form(action='/user/forgotpwd', method='post', novalidate)
