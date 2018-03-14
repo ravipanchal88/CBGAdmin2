@@ -24,12 +24,12 @@ html
         form( method='post')
           .form-group
             label(for='password') New Password
-            input.form-control(type='password', name='password', value='', placeholder='New password', autofocus=true)
+            input.form-control.login_input(type='password', name='password', value='', placeholder='New password', autofocus=true)
           .form-group
             label(for='confirm') Confirm Password
-            input.form-control(type='password', name='confirm', value='', placeholder='Confirm password')
+            input.form-control.login_input(type='password', name='confirm', value='', placeholder='Confirm password')
           .form-group
-            button.btn.btn-primary(type='submit') Update Password 
+            button.btn.btn-primary.btn-lg.login_button(type='submit') Save Password
     .row
         .col-lg-12/col-md-12.footer
           p IRS 501(C’)(3) Organization © CBG Foundation 2017-18 - All rights reserved
