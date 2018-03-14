@@ -24,6 +24,7 @@ html
 							h1.login_text CBG Admin Portal
 							h3.login_text Login
 							include ../errors
+							include ../error
 							form(action='/user/login', method='post')
 								.form-group
 									label.login_text(for='username') Email
@@ -35,4 +36,5 @@ html
 									input.btn.btn-primary.btn-lg.login_button(type='submit', value='Log In')
 						.col-lg-12.col-md-12.footer
 							p IRS 501(C’)(3) Organization © CBG Foundation 2017-18 - All rights reserved
-							a(href='/user/signup') Sign Up			
+							a(href='/user/signup') Sign Up
+							a(href='/user/forgot') Forgot Password

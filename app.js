@@ -7,9 +7,9 @@ var bodyParser = require('body-parser');
 var session      = require('express-session');
 var cookieParser = require('cookie-parser');
 var passport     = require('passport');
-var flash = require('connect-flash');
+//var flash = require('connect-flash');
+var flash = require('express-flash');
 var paginate = require('express-paginate');
-
 var app = express();
 
 // Helpers.
@@ -19,9 +19,7 @@ app.locals.date = function(date) {
   return(dateFormat(date, 'dd-mmm-yyyy'));
 };
 
-
-
-//Keep this before all the routes that will use pagiante
+//Keep this before all the routes that will use paginate
 app.use(paginate.middleware(10,50));
 
 //Routers
@@ -29,8 +27,6 @@ var index = require('./routes/index');
 var users = require('./routes/user');
 var student = require('./routes/student');
 var donor = require('./routes/donor');
-
-
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -40,7 +36,7 @@ app.set('view engine', 'pug');
 //app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
 app.use(logger('dev'));
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 //console.log('Static Path:'+path.join(__dirname, 'public'));

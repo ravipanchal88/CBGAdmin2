@@ -44,9 +44,13 @@ module.exports = function(sequelize, DataTypes) {
           msg: 'Name is required'
         }
       }
-    } 
-  
-   })
-
+    },
+    resetPasswordToken: {
+      type: DataTypes.STRING
+    },
+    resetPasswordExpires: {
+      type: DataTypes.DATE
+    }
+  })
   return(User);
 };

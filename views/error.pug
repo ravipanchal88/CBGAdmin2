@@ -1,3 +1,7 @@
 
 block content
-  h1= message
+
+
+if (failureMessage)
+	.alert.alert-danger
+		h5= messages.error

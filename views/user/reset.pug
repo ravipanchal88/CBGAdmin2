@@ -1,0 +1,35 @@
+doctype html
+html
+  head
+    title CBG Admin
+    link(rel='stylesheet', href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css")
+    link(rel='stylesheet', href='/stylesheets/style.css')
+    script(src='https://use.fontawesome.com/a3a71a0323.js')
+    script(src='/javascripts/jquery/jquery.js')
+    script(src='/javascripts/jquery/login.js')
+    //script(src='/javascripts/jquery/bootstrap.js')
+    script(src='/javascripts/jquery/cookies.js')
+    //script(src='/javascripts/jquery/application.js')
+  body
+  block content
+  .fluid-container
+    .row
+      .col-lg-12.col-md-12.register_heading
+        img(src="/images/logo.png" style="width:200px")
+        h4 Welcome to CBG Admin Portal
+    .row
+      .col-lg-8.col-md-8.register_form
+        h5 Reset Password
+        include errors
+        form( method='post')
+          .form-group
+            label(for='password') New Password
+            input.form-control(type='password', name='password', value='', placeholder='New password', autofocus=true)
+          .form-group
+            label(for='confirm') Confirm Password
+            input.form-control(type='password', name='confirm', value='', placeholder='Confirm password')
+          .form-group
+            button.btn.btn-primary(type='submit') Update Password 
+    .row
+        .col-lg-12/col-md-12.footer
+          p IRS 501(C’)(3) Organization © CBG Foundation 2017-18 - All rights reserved
